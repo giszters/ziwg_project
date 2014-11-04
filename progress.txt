@@ -1,4 +1,4 @@
-2014-11-09
+2014-11-04
 - Utworzyłem projekt hotelix, w ramach którego wygenerowała się apka hotelix
 - Dodałem aplikację structure w której zaklepałem 4 modele
 - w apce strukture w pliku admin.py dodałem modele do panelu administracyjnego Django
@@ -52,3 +52,20 @@ standardu PEP-8. Jeśli nie chce Wam się czytać o tym to podam kilka najważni
 Enjoy ./manage.py runserver
 (A właśnie, jakby wam manage.py nie działał jak wyżej, zróbcie na nim $ chmod +x manage.py)
 -------
+
+2014-11-04 - wieczór (1 Kasztelan)
+Stwierdziłem że warto się trochę pobawić i podłubać w widokach generycznych (a co!)
+Widoki generyczne to klasy, które posiadając gotowe metody upraszaczają pisanie widoków - wtedy widok nie jest funkcją pythonową, a klasą.
+Niestety na początek się trzeba przebić przez to https://docs.djangoproject.com/en/dev/topics/class-based-views/
+W pracy codziennie z tego korzystam, ale mam gotowe klasy z których korzystam dziedzicząc, tutaj pisze to od 0.
+Na razie dodałem 2 klasy do listowania wszystkich budynków, a dla każdego budynku jego piętra
+
+Dodałem pierwsze CSS-y do wybudowania menu i contentu danej strony
+Dodałem urlsy aplikacji structure do urlsów całego hotelixu. Tutaj musiałem sobie poczytać o nazywaniu urls-ów
+dzięki czemu nie hardcodujemy w szablonach URL-a, tylko wywołujemy np.  {% url "structure:house_list %}
+https://docs.djangoproject.com/en/dev/topics/http/urls/#url-namespaces-and-included-urlconfs
+
+Jutro pojadę z widokami generycznymi dla created, updated i deleted. Będzie trzeba jeszcze pomyśleć
+o rozwiązaniu uprawnień - żeby recepcjonista nie mógł w tym dłubać (może jakiś Mixin...(?))
+---------------
+
