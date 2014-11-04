@@ -1,0 +1,54 @@
+2014-11-09
+- Utworzyłem projekt hotelix, w ramach którego wygenerowała się apka hotelix
+- Dodałem aplikację structure w której zaklepałem 4 modele
+- w apce strukture w pliku admin.py dodałem modele do panelu administracyjnego Django
+- w pliku hotelix/settings.py rozdzieliłem krotkę INSTALLED_APPS na DJANGO_APPS (domyślne)
+oraz HOTELIX_APPS, czyli pisane przez nas aplikacje;
+- napisałem podstawowy widok do logowania i wylogowania, stąd stałem LOGIN_URL i LOGIN_REDIRECT_URL
+- widok do logowannia tworzy się "w tle" (magia Djangowa) za pomocą django.contrib.auth.views.login
+w pliku hotelix/urls.py
+- widok do wylogowania znajduje się w hotelix/views.py (logout_view)
+- napisałem podstawy szablonów HTML, na razie bez szału, żeby było cokolwiek, są to:
+hotelix/templates base.html home.html login.html
+
+base.html będzie stanowił szablon bazowy (pozostałe będą go rozszerzać {% extends 'base.html' %})
+login.html zawiera wyświetlenie formularza logowania. Formularz tworzy się w magii djangowej
+home.html to strona główa (po zalogowaniu)
+
+- dodałem pliki statyczne (sprawdzenie czy wszystko ok), są to logo.png i style.css w podkatalogach
+hotelix/static
+- aby system sprawdzał czy użytkownik jest zalogowany można posłużyć się za każdym razem dekoratorem
+funkcji widoku (https://docs.djangoproject.com/en/1.5/topics/auth/default/#the-login-required-decorator),
+aby tego NIE robić, napisałem osobny middleware w hotelix/middlewares.py i wpiąłem go do listy
+w settingsach. W pliku middlewares.py znajduje się link do gotowca - ogólnie middleware'y to też
+taki element Djangowej magii :D
+- djangowego admina schowałem pod url-em /dja, a nie /admin. Zrobiłem to żeby mi się
+strona (wy)logowania nie gryzła, później nie chciało już mi się zmieniać.
+-Jeśli chodzi o bazę to proponuje wywalić plik db.sqlite3 i na piechotę przeprowadzić 
+./manage syncdb
+(i tego nie jestem pewien, ale przeprowadzić migracje)
+./manage.py migrate
+Ogólnie polecam zapoznać się z https://docs.djangoproject.com/en/dev/topics/migrations/, bo będzie się
+przydawać
+Jeśli nie wywalicie to w bazie jest 1 superuser login: admin hasło: admin
+- dodałem w katalogu ziwg_projekt plik .gitignore w którym wylistowałem następujące pliki
+*.pyc
+.project
+.pydevproject
+.settings/
+
+.project i .pydevproject to ukryte katalogi mojego Liclipse'a (Pythonowa nakładka na Eclipse'a)
+Jeśli korzystacie z innych narzędzie które tworzą śmieci, proponuje uzupełnić.
+
+Jeśli chodzi o pisanie kodu, to fajnie by było jakbyśmy trzymali się mniej więcej
+standardu PEP-8. Jeśli nie chce Wam się czytać o tym to podam kilka najważniejszych zasad:
+1. linia kodu nie powinna zajmować więcej niż 80 znaków (łącznie z białymi znakami)
+2. Wcięcia robimy za pomocą 4 spacji, nie korzystamy ze znaku \t
+3. zmienne i metody piszemy małymi literami łącząc wyrazy podkreślnikiem
+4. Klasy zaczynamy  wielką literą, a później CamelCasem
+5. robimy 1 wolną linię między definicjami metod w klasie
+6. robimy 2 wolne linie między definicjami klas i wolnych funkcji
+
+Enjoy ./manage.py runserver
+(A właśnie, jakby wam manage.py nie działał jak wyżej, zróbcie na nim $ chmod +x manage.py)
+-------
