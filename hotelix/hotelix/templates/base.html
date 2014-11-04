@@ -1,0 +1,23 @@
+{% load staticfiles %}
+
+<html>
+<head>
+    <title>Hotelix - tworzymy turystykę</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    {% block logout %}
+    {# TODO - logout #}
+    <div id="logout">
+        <a href="/logout/">Wyloguj</a>
+    </div>
+    {% endblock %}
+    <div id="logo">
+        <img src="{% static 'img/logo.png' %}" alt="logo" />
+    </div>
+    {# tu będzie menu po aplikacji #}
+    {% block content %}{% endblock %}
+</body>
+</html>
