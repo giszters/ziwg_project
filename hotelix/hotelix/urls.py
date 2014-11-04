@@ -5,5 +5,6 @@ urlpatterns = patterns('',
     url(r'^$', 'hotelix.views.home'),
     url(r'^dja/', include(admin.site.urls)),
     url(r'^login/', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
-    url(r'^logout/', 'hotelix.views.logout_view')
+    url(r'^logout/', 'hotelix.views.logout_view'),
+    url(r'^structure/', include(('structure.urls', 'structure', 'structure')))
 )

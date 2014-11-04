@@ -9,7 +9,6 @@
 
 <body>
     {% block logout %}
-    {# TODO - logout #}
     <div id="logout">
         <a href="/logout/">Wyloguj</a>
     </div>
@@ -17,7 +16,20 @@
     <div id="logo">
         <img src="{% static 'img/logo.png' %}" alt="logo" />
     </div>
-    {# tu będzie menu po aplikacji #}
-    {% block content %}{% endblock %}
+    
+    {% block common %}
+    <div id="common">
+        <div id="menu">
+            <h3>menu</h3>
+            <ul style="list-style-type: none;">
+                <li><a href="/">Home</a></li>
+                <li><a href="{% url 'structure:house_list' %}">Lista domów</a></li>
+            </ul>
+        </div>
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    {% endblock %}
 </body>
 </html>

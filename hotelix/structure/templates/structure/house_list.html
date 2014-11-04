@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Lista budynków</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Numer i nazwa</th>
+            <th>Link do pięter</th>
+            <th>Edycja</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for house in object_list %}
+        <tr>
+            <td>{{ house.id }}) {{ house.name }}</td>
+            <td><a href="{% url 'structure:floor_list' house.id %}">Piętra</a></td>
+            <td><a href="#">Edycja</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table> 
+{% endblock %}

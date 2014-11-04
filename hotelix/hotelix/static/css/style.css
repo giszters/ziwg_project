@@ -1,3 +1,7 @@
+body{
+    background-color: #ABFF8A;
+}
+
 #logo{
     text-align: center;
 }
@@ -15,4 +19,23 @@
 }
 #logout a{
     text-decoration: none;
+}
+
+/* http://stackoverflow.com/a/446097 */
+#common{ /* common has #content and #menu */
+    margin-top: 20px;
+}
+#content{
+    /* margin-left: 20%; */
+    width: 800px;
+    background-color: #ddd;
+    /* display: inline-block; */
+    margin-left: 210px;
+}
+
+#menu{
+    width: 200px;
+    background-color: #3CDFFF;
+    /* display: inline-block; */
+    float: left;
 }
