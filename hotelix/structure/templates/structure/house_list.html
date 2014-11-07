@@ -2,12 +2,14 @@
 
 {% block content %}
 <h3>Lista budynków</h3>
+<a href="{% url 'structure:house_create' %}">Nowy budynek</a>
 <table>
     <thead>
         <tr>
             <th>Numer i nazwa</th>
             <th>Link do pięter</th>
             <th>Edycja</th>
+            <th>Usuwanie</th>
         </tr>
     </thead>
     <tbody>
@@ -15,7 +17,8 @@
         <tr>
             <td>{{ house.id }}) {{ house.name }}</td>
             <td><a href="{% url 'structure:floor_list' house.id %}">Piętra</a></td>
-            <td><a href="#">Edycja</a></td>
+            <td><a href="{% url 'structure:house_edit' house.id %}">Edycja</a></td>
+            <td><a href="{% url 'structure:house_delete' house.id %}">Usuń</a></td>
         </tr>
     {% endfor %}
     </tbody>

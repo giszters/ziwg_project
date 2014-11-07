@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.core.urlresolvers import reverse
 from django.db import models
 
 # Create your models here.
@@ -10,9 +11,11 @@ class House(models.Model):
         verbose_name = u"Budynek"
         verbose_name_plural = u"Budynki"
         
-
     def __unicode__(self):
         return u"%s) %s" % (self.id, self.name)
+
+    def get_absolute_url(self):
+        return reverse('structure:house_edit', kwargs={'pk': str(self.id)})
 
 
 class Floor(models.Model):

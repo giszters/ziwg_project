@@ -1,6 +1,36 @@
 body{
     background-color: #ABFF8A;
 }
+/* nice styles for table, a little downgrade http://veerle-v2.duoh.com/blog/comments/a_css_styled_table/ */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+th {
+    font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica,sans-serif;
+    border-right: 1px solid #3cdfff;
+    border-bottom: 1px solid #3cdfff;
+    border-top: 1px solid #3cdfff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 6px 6px 6px 12px;
+    background-color: #CAE8EA;
+}
+td {
+    border-right: 1px solid #3cdfff;
+    border-bottom: 1px solid #3cdfff;
+    background: #fff;
+    padding: 6px 6px 6px 12px;
+}
+th:first-child, td:first-child{
+    /* border-left: 1px solid #C1DAD7 */;
+    border-left: 1px solid #3cdfff
+}
+
+
 
 #logo{
     text-align: center;
@@ -31,6 +61,7 @@ body{
     background-color: #ddd;
     /* display: inline-block; */
     margin-left: 210px;
+    padding-bottom: 20px;
 }
 
 #menu{
@@ -38,4 +69,10 @@ body{
     background-color: #3CDFFF;
     /* display: inline-block; */
     float: left;
+}
+
+/* decorate djago elements */
+.errorlist{
+    font-weight: bold;
+    color: #CE0000;
 }

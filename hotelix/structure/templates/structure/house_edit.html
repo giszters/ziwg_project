@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Edytuj budynek {{ object.name }}</h3>
+    <form action="{% url 'structure:house_edit' object.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Zapisz" />
+    </form>
+{% endblock %}

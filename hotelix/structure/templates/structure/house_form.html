@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Dodaj budynek</h3>
+    {% comment %} https://docs.djangoproject.com/en/dev/topics/forms/ {% endcomment %}
+    
+    <form action="{% url 'structure:house_create' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Zapisz" />
+    </form>
+{% endblock %}

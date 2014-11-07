@@ -7,5 +7,4 @@ def logout_view(request):
     return redirect('/login')
 
 def home(request):
-    print "tutej"
     return render_to_response("home.html", {'my_var': 3})
