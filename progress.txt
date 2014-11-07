@@ -68,4 +68,16 @@ https://docs.djangoproject.com/en/dev/topics/http/urls/#url-namespaces-and-inclu
 Jutro pojadę z widokami generycznymi dla created, updated i deleted. Będzie trzeba jeszcze pomyśleć
 o rozwiązaniu uprawnień - żeby recepcjonista nie mógł w tym dłubać (może jakiś Mixin...(?))
 ---------------
+2014-11-07 (1 kasztelan)
+Dodałem cały CRUD dla obiektu House. Najtrudniej jest się przebić przez niezbędne ustawienia.
+Teraz postawienie kolejnych widoków dla Floor i Room jest prawie formalnością.
+Póki co nie wykorzystujemy ModelForm'ów, ale gdzieś się niedługo pojawią.
+Dodałem plik jQuery w wersji 1.11.1, bo nie wyobrażam sobie rzeźbić na czystym Jacascripcie
+Znalazłem w sieci jakieś znośne CSS-y dla tabelek i zaimplementowałem.
 
+Do przemyślenia są URL-e dla aplikacji structure. Czy pchamy się w zagnieżdżenia, np
+house/12/floor/1/room/3, czy też może
+floor/12/ dla takiej przykładowej edycji piętra.
+Pierwszy sposób jest o tyle łatwiejszy że dla danego budynku mamy "za darmo" w URL-u
+jego piętra. Tzn łatwo wyciągnąć dla piętra id obiektu jego ojca (tutaj budynek).
+------------------------
