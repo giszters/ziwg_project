@@ -17,13 +17,17 @@
     <div id="logo">
         <img src="{% static 'img/logo.png' %}" alt="logo" />
     </div>
-    
+
     {% block common %}
     <div id="common">
         <div id="menu">
             <h3>menu</h3>
             <ul style="list-style-type: none;">
                 <li><a href="/">Home</a></li>
+                <li><a href="/dja/">Panel admina</a></li>
+                <li>ZAMÓWIENIA</li>
+                <li><a href="{% url 'client:client_list' %}">Lista klientów</a></li>
+                <li>STRUKTURA</li>
                 <li><a href="{% url 'structure:house_list' %}">Lista domów</a></li>
             </ul>
         </div>
@@ -32,7 +36,7 @@
         </div>
     </div>
     {% endblock %}
-    
+
     {% block footer %}
         {# Here will be extra JS and/or CSS #}
         <script type="text/javascript">

@@ -81,3 +81,10 @@ floor/12/ dla takiej przykładowej edycji piętra.
 Pierwszy sposób jest o tyle łatwiejszy że dla danego budynku mamy "za darmo" w URL-u
 jego piętra. Tzn łatwo wyciągnąć dla piętra id obiektu jego ojca (tutaj budynek).
 ------------------------
+2014-11-09 godz 19:15
+Dodałem obydwa modele do aplikacji client.
+Dodałem modele do panelu admina
+Dodałem widok listy Klientów (osób), zaczynając widoki w tej apce
+Dodałem linki w menu
+--------------------------
+
