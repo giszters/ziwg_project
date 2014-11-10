@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>{{ view.view_name }}</h3>
+<a href="{{ view.create_url }}"><button>Utwórz {{ view.model.get_verbose_name }}</button></a>
+<table>
+    {% for object in object_list %}
+    <tr>
+        <td>{{ object.id }}</td>
+        <td>{{ object.name }}</td>
+        <td><a href="{{ object.get_absolute_url }}">Edycja</a></td>
+        <td><a href="{{ object.get_delete_url }}">Usuń</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

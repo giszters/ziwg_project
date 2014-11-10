@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^logout/', 'hotelix.views.logout_view'),
     url(r'^structure/', include(('structure.urls', 'structure', 'structure'))),
     url(r'^client/', include(('client.urls', 'client', 'client'))),
+    url(r'^services/', include(('services.urls', 'services', 'services'))),
 )

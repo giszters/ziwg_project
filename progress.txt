@@ -87,4 +87,20 @@ Dodałem modele do panelu admina
 Dodałem widok listy Klientów (osób), zaczynając widoki w tej apce
 Dodałem linki w menu
 --------------------------
-
+2014-11-10
+Dodałem wszystkie modele aplikacje services. Dodałem do modeli ServiceOrder i MealOrder oddzielne pole
+order_time, które będzie stanowić godzinę wydania posiłku/atrakcji. Przyjąłem że godziny się nie wpisuje
+jeśli hotel robi akcję o konkretnej godzinie, np. śniadanie o 8 rano.
+Dodałem te modele do panelu admina
+Napisałem CRUD-y dla modeli MealType i ServiceType. (nowe linki w menu)
+Z racji że te modele są bardzo do siebie podobne, oraz że warto trzymać się zasady DRY
+zacząłem pisać w apce hotelix uniwersalne szablony dla zadań create, edit i delete.
+Szablony te wymagają dodania nowych pól do widoków, oraz metod na modelach - taka trochę magia, ale fajnie się później z tego korzysta
+Napisałem jeden wspólny szablon do zrobienia list posiłków i usług dodatkowych, znów zasada DRY (ps. niech żyje kacze typowanie \o/)
+Kolejna taka mała magia to to, że napisałem SuccessMixin, który dla widoków edit zapewnia dodanie do URL-a części GET "?success=1"
+Żeby Mixin zadziałał trzeba po nim podziedziczyć w widoku. Przypominam że w Pythonie można dziedziczyć po wielu klasach
+a jeśli metody się powtarzają to pierwszeństwo ma ta z klasy najwcześniej zadeklarowanej, np
+class C(A,B):
+    def foo(self): print bar() # wywoła się metoda A.bar(), o ile taka metoda na klasie A istnieje
+PS. Coraz bardziej nęci mnie myśl napisania testów jednostkowych (przeklikiwanie CRUD-ów zaczyna być męczące).
+---------------------------------

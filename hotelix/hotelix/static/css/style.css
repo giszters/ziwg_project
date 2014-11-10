@@ -3,7 +3,7 @@ body{
 }
 /* nice styles for table, a little downgrade http://veerle-v2.duoh.com/blog/comments/a_css_styled_table/ */
 table {
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
     border-spacing: 0;
     margin-left: 15px;
     margin-top: 15px;

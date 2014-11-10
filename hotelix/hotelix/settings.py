@@ -42,6 +42,7 @@ HOTELIX_APPS = (
     'hotelix',
     'structure',
     'client',
+    'services',
 )
 
 INSTALLED_APPS = DJANGO_APPS + HOTELIX_APPS

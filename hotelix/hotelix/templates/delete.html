@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Czy na pewno chcesz usunąć {{ object.meta.verbose_name }} "{{ object.name }}"?</h3>
+    <div>
+    <form method="post" action="{{ object.get_delete_url }}" style="display: inline;">
+       {% csrf_token %}
+       <input type="submit" value="Tak" />
+    </form>
+
+    <a href="{{ view.discard_url }}"><button type="button">Nie</button></a>
+    </div>
+{% endblock %}

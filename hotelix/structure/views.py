@@ -31,10 +31,8 @@ class HouseCreate(CreateView):
 
 class HouseEdit(UpdateView):
     model = House
-    # I don't want the same template for create and update
-    # so I change below variable 
-    template_name_suffix = "_edit"
-    
+    template_name = "edit.html"
+
     def get_success_url(self):
         url = super(HouseEdit, self).get_success_url()
         url += "?success=1"  # And jQuery make magic (look at the base.html)
