@@ -6,6 +6,12 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <!-- jQuery UI -->
+    <script src="{% static 'ui/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'ui/jquery.ui.datepicker-pl.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'ui/jquery-ui.theme.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'ui/jquery-ui.structure.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'ui/jquery-ui.css' %}">
 </head>
 
 <body>
@@ -22,7 +28,8 @@
     <div id="common">
         <div id="menu">
             <h3>menu</h3>
-            <ul style="list-style-type: none;">
+            <!-- <ul style="list-style-type: none;"> -->
+            <ul style="">
                 <li><a href="/">Home</a></li>
                 <li><a href="/dja/">Panel admina</a></li>
                 <li>ZAMÓWIENIA</li>
@@ -31,6 +38,8 @@
                 <li><a href="{% url 'structure:house_list' %}">Lista domów</a></li>
                 <li>POSIŁKI</li>
                 <li><a href="{% url 'services:mealtype_list' %}">Lista posiłków</a></li>
+                <li><a href="{% url 'services:mealorder_list' %}">Zamówienia posiłków</a></li>
+                
                 <li>USŁUGI</li>
                 <li><a href="{% url 'services:servicetype_list' %}">Lista usług</a></li>
             </ul>
@@ -45,8 +54,20 @@
         {# Here will be extra JS and/or CSS #}
         <script type="text/javascript">
         $(document).ready(function(){
-            if(location.search.search("success") > -1)
+            if(location.search.search("success") > -1){
                 alert("Zapis poprawny");
+            }
+            /* dayNamesShort: $.datepicker.regional[ "pl" ].dayNamesShort,
+                dayNames: $.datepicker.regional[ "pl" ].dayNames,
+                monthNamesShort: $.datepicker.regional[ "pl" ].monthNamesShort,
+                monthNames: $.datepicker.regional[ "pl" ].monthNames
+            */
+
+            $(".date_picker").datepicker({
+                firstDay: 1,
+                dateFormat: "yy-mm-dd"
+            });
+            console.log("Datepicker loaded");
         });
         </script>
     {% endblock %}

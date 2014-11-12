@@ -43,6 +43,9 @@ class MealOrder(models.Model):
     def __unicode__(self):
         return u"%s) meal: %s, client: %s" % (self.id, self.meal_type.name,
                                               self.client.name)
+    
+    def get_absolute_url(self):
+        return reverse('services:mealorder_edit', kwargs={'pk': str(self.id)})
 
 
 class ServiceType(models.Model):

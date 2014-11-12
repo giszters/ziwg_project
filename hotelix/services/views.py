@@ -4,7 +4,8 @@ from django.shortcuts import render
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
 from hotelix.views import SuccessMixin
-from services.models import MealType, ServiceType
+from services.forms import MealOrderForm
+from services.models import MealType, ServiceType, MealOrder
 
 
 """ MEAL_TYPE model"""
@@ -38,6 +39,22 @@ class MealTypeDelete(DeleteView):
     template_name = 'delete.html'
     delete_arg = 'services:mealtype_delete'
     discard_url = success_url = reverse_lazy('services:mealtype_list')
+
+
+""" MEAL_ORDER model """
+class MealOrderList(ListView):
+    model = MealOrder
+    template_name = 'services/meal_order_list.html'
+
+    def get_queryset(self):
+        """ The youngest will be first on the list """
+        return MealOrder.objects.order_by('-id')
+
+
+class MealOrderEdit(SuccessMixin, UpdateView):
+    model = MealOrder
+    template_name = 'edit.html'
+    form_class = MealOrderForm
 
 
 """ SERVICE_TYPE model"""

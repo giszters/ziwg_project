@@ -104,3 +104,14 @@ class C(A,B):
     def foo(self): print bar() # wywoła się metoda A.bar(), o ile taka metoda na klasie A istnieje
 PS. Coraz bardziej nęci mnie myśl napisania testów jednostkowych (przeklikiwanie CRUD-ów zaczyna być męczące).
 ---------------------------------
+2014-11-12
+Dodałem listę i edycję do modelu MealOrder. Tutaj pojawiła się nareszcie :-) konieczność
+wykorzystywania formularza Djangowego, ale że korzystamy z widoków generycznych to używam ModelForm
+Żeby nie było zbyt prosto dopiąłem do projektu całe fobrodziejstwo jQuery-ui, gdzie jest m.in DatePicker.
+DatePicker wykorzystuję do ustawiania dat. Dodałem do DatePickera j.polski. Link trochę upierdliwy do znalezienia
+http://bugs.jqueryui.com/attachment/ticket/5522/jquery.ui.datepicker-pl.js
+I aby ułatwić wybór godziny podania dania, ustawiłem zakres czasu od 10:00 do 18:30 z przerwami co pół h.
+Teraz jeszcze tylko troszkę zabawy, żeby zrobić dodawania i usuwanie zamówienia dań.
+Zamówienie dodatkowej usługi pójdzie analogicznie, wykorzystam większość formularza który napisałem dzisiaj
+---------------------------------------------------------------
+
