@@ -114,4 +114,11 @@ I aby ułatwić wybór godziny podania dania, ustawiłem zakres czasu od 10:00 d
 Teraz jeszcze tylko troszkę zabawy, żeby zrobić dodawania i usuwanie zamówienia dań.
 Zamówienie dodatkowej usługi pójdzie analogicznie, wykorzystam większość formularza który napisałem dzisiaj
 ---------------------------------------------------------------
-
+2014-11-13 (2h po lubelskiej perle się chyba nie liczy...)
+Skończyłem cały services, czyli mamy całe CRUD-y dla MealOrder, MealType, ServiceOrder, ServiceType.
+Aby nie powtarzać kodu zrobiłem wspólny CommonOrderForm po którym dziedziczą formularze
+dla MealType i ServiceType. Najlepiej zobaczyć sobie w kodzik jak to ładnie sie przedstawia.
+Znalazłem jakieś w miarę przyjemne CSS-y dla menu (sam nie mogłem się na to patrzeć) i zaimplementowałem,
+tzn. skopiowałem bez zastanowienia z neta. Aby nie bruździło w pliku style.css, nowe style dodałem w
+menu.css
+---------------------------------------------------------------

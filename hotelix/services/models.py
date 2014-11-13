@@ -33,8 +33,10 @@ class MealOrder(models.Model):
     stop_time = models.DateField(u"Data zakończenia", null=False)
     order_time = models.TimeField(u"Godzina podania", blank=True, null=True)
     client = models.ForeignKey(Client, null=False)
-    price = models.DecimalField(u"Cena za danie", null=False, max_digits=10,
+    price = models.DecimalField(u"Cena za 1 porcje", null=False, max_digits=10,
                                 decimal_places=2)
+    serving = models.DecimalField(u"Liczba porcji", null=False, max_digits=10,
+                                  decimal_places=1, default=1)
 
     class Meta:
         verbose_name = u"Zamówienia dania"
@@ -46,6 +48,13 @@ class MealOrder(models.Model):
     
     def get_absolute_url(self):
         return reverse('services:mealorder_edit', kwargs={'pk': str(self.id)})
+
+    def get_name(self):
+        return u"%s - %s - %s" % (self.meal_type.name, self.client.name,
+                                  self.price)
+
+    def get_verbose_name(self):
+        return self._meta.verbose_name
 
 
 class ServiceType(models.Model):
@@ -79,9 +88,22 @@ class ServiceOrder(models.Model):
                                 decimal_places=2)
 
     class Meta:
-        verbose_name = u"zamówienie usługi"
-        verbose_name_plural = u"zamówienia usług"
+        verbose_name = u"Zamówienie usługi"
+        verbose_name_plural = u"Zamówienia usług"
 
     def __unicode__(self):
         return u"%s) service: %s, client: %s" % (self.id, self.service_type.name,
                                                  self.client.name)
+
+    def get_absolute_url(self):
+        return reverse('services:serviceorder_edit', kwargs={'pk': str(self.id)})
+
+    def get_delete_url(self):
+        return reverse('services:serviceorder_delete', kwargs={'pk': str(self.id)})
+
+    def get_verbose_name(self):
+        return self._meta.verbose_name
+
+    def get_name(self):
+        return u"%s - %s - %s" % (self.service_type.name, self.client.name,
+                                  self.price)

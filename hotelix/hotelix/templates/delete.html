@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h3>Czy na pewno chcesz usunąć {{ object.meta.verbose_name }} "{{ object.name }}"?</h3>
+    {% if object.name %}
+        <h3>Czy na pewno chcesz usunąć "{{ object.name }}"?</h3>
+    {% elif object.get_name %}
+        <h3>Czy na pewno chcesz usunąć "{{ object.get_name }}"?</h3>
+    {% else %}
+        <h3>Czy na pewno chcesz usunąć ten obiekt?</h3>
+    {% endif %}
     <div>
     <form method="post" action="{{ object.get_delete_url }}" style="display: inline;">
        {% csrf_token %}

@@ -3,7 +3,9 @@ from django.conf.urls import patterns, include, url
 
 from services.views import MealTypeList, ServiceTypeList, MealTypeEdit,\
     ServiceTypeEdit, MealTypeCreate, ServiceTypeCreate, MealTypeDelete,\
-    ServiceTypeDelete, MealOrderList, MealOrderEdit
+    ServiceTypeDelete, MealOrderList, MealOrderEdit, MealOrderDelete,\
+    MealOrderCreate, ServiceOrderList, ServiceOrderEdit, ServiceOrderDelete,\
+    ServiceOrderCreate
 
 urlpatterns = [
     url(r'^mealtype/$', MealTypeList.as_view(), name='mealtype_list'),
@@ -18,4 +20,11 @@ urlpatterns = [
     
     url(r'^mealorder/$', MealOrderList.as_view(), name='mealorder_list'),
     url(r'^mealorder/(?P<pk>[0-9]+)/$', MealOrderEdit.as_view(), name='mealorder_edit'),
+    url(r'^mealorder/create/$', MealOrderCreate.as_view(), name='mealorder_create'),
+    url(r'^mealorder/(?P<pk>[0-9]+)/delete/$', MealOrderDelete.as_view(), name='mealorder_delete'),
+    
+    url(r'^serviceorder/$', ServiceOrderList.as_view(), name='serviceorder_list'),
+    url(r'^serviceorder/(?P<pk>[0-9]+)/$', ServiceOrderEdit.as_view(), name='serviceorder_edit'),
+    url(r'^serviceorder/create/$', ServiceOrderCreate.as_view(), name='serviceorder_create'),
+    url(r'^serviceorder/(?P<pk>[0-9]+)/delete/$', ServiceOrderDelete.as_view(), name='serviceorder_delete'),
 ]

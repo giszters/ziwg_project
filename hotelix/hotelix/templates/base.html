@@ -5,6 +5,7 @@
     <title>Hotelix - tworzymy turystykę</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menu.css' %}">
     <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
     <!-- jQuery UI -->
     <script src="{% static 'ui/jquery-ui.min.js' %}"></script>
@@ -26,22 +27,28 @@
 
     {% block common %}
     <div id="common">
-        <div id="menu">
-            <h3>menu</h3>
-            <!-- <ul style="list-style-type: none;"> -->
-            <ul style="">
+        <div id="ddblueblockmenu" class="menu">
+            <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/dja/">Panel admina</a></li>
-                <li>ZAMÓWIENIA</li>
+            </ul>
+            <div class="menutitle">Zamówienia</div>
+            <ul>
                 <li><a href="{% url 'client:client_list' %}">Lista klientów</a></li>
-                <li>STRUKTURA</li>
+            </ul>
+            <div class="menutitle">Struktura</div>
+            <ul>
                 <li><a href="{% url 'structure:house_list' %}">Lista domów</a></li>
-                <li>POSIŁKI</li>
+            </ul>
+            <div class="menutitle">Posiłki</div>
+            <ul>
                 <li><a href="{% url 'services:mealtype_list' %}">Lista posiłków</a></li>
                 <li><a href="{% url 'services:mealorder_list' %}">Zamówienia posiłków</a></li>
-                
-                <li>USŁUGI</li>
+            </ul>
+            <div class="menutitle">Usługi</div>
+            <ul>
                 <li><a href="{% url 'services:servicetype_list' %}">Lista usług</a></li>
+                <li><a href="{% url 'services:serviceorder_list' %}">Zamówienia usług</a></li>
             </ul>
         </div>
         <div id="content">

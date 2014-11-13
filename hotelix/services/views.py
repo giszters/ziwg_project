@@ -4,8 +4,8 @@ from django.shortcuts import render
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
 from hotelix.views import SuccessMixin
-from services.forms import MealOrderForm
-from services.models import MealType, ServiceType, MealOrder
+from services.forms import MealOrderForm, ServiceOrderForm
+from services.models import MealType, ServiceType, MealOrder, ServiceOrder
 
 
 """ MEAL_TYPE model"""
@@ -45,6 +45,7 @@ class MealTypeDelete(DeleteView):
 class MealOrderList(ListView):
     model = MealOrder
     template_name = 'services/meal_order_list.html'
+    create_url = reverse_lazy('services:mealorder_create')
 
     def get_queryset(self):
         """ The youngest will be first on the list """
@@ -54,6 +55,19 @@ class MealOrderList(ListView):
 class MealOrderEdit(SuccessMixin, UpdateView):
     model = MealOrder
     template_name = 'edit.html'
+    form_class = MealOrderForm
+
+
+class MealOrderDelete(DeleteView):
+    model = MealOrder
+    template_name = 'delete.html'
+    delete_arg = 'services:mealorder_delete'
+    discard_url = success_url = reverse_lazy('services:mealorder_list')
+
+
+class MealOrderCreate(CreateView):
+    model = MealOrder
+    template_name = 'create.html'
     form_class = MealOrderForm
 
 
@@ -80,3 +94,33 @@ class ServiceTypeDelete(DeleteView):
     template_name = 'delete.html'
     delete_arg = 'services:servicetype_delete'
     discard_url = success_url = reverse_lazy('services:servicetype_list')
+
+
+""" SERVICE_ORDER model """
+class ServiceOrderList(ListView):
+    model = ServiceOrder
+    template_name = 'services/service_order_list.html'
+    create_url = reverse_lazy('services:serviceorder_create')
+
+    def get_queryset(self):
+        """ The youngest will be first on the list """
+        return ServiceOrder.objects.order_by('-id')
+
+
+class ServiceOrderEdit(SuccessMixin, UpdateView):
+    model = ServiceOrder
+    template_name = 'edit.html'
+    form_class = ServiceOrderForm
+
+
+class ServiceOrderDelete(DeleteView):
+    model = ServiceOrder
+    template_name = 'delete.html'
+    delete_arg = 'services:serviceorder_delete'
+    discard_url = success_url = reverse_lazy('services:serviceorder_list')
+
+
+class ServiceOrderCreate(CreateView):
+    model = ServiceOrder
+    template_name = 'create.html'
+    form_class = ServiceOrderForm
