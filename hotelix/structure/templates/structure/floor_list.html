@@ -2,21 +2,23 @@
 
 {% block content %}
 <h3>Lista pięter budynku <span style="text-decoration: underline">{{ house_name }}</span></h3>
+<a href="{% url 'structure:floor_create' house_id %}"><button>Nowe piętro</button></a>
 <table>
     <thead>
         <tr>
             <th>Numer piętra</th>
             <th>---</th>
             <th>Edycja</th>
+            <th>Usuwanie</th>
         </tr>
     </thead>
     <tbody>
     {% for floor in object_list %}
         <tr>
             <td>{{ floor.number }}</td>
-            {% comment %}<td><a href="{% url 'structure:floor_list' house.id %}">Piętra</a></td>{% endcomment %}
             <td>---</td>
-            <td><a href="#">Edycja</a></td>
+            <td><a href="{% url 'structure:floor_edit' floor.house.id floor.id %}">Edycja</a></td>
+            <td><a href="{% url 'structure:floor_delete' floor.house.id floor.id %}">Usuń</a></td>
         </tr>
     {% endfor %}
     </tbody>

@@ -52,6 +52,11 @@
             </ul>
         </div>
         <div id="content">
+            {% if view.extra_image %}
+            <div id="extra_image" style="">
+                <img src="{% static view.extra_image %}" alt="extra image">
+            </div>
+            {% endif %}
             {% block content %}{% endblock %}
         </div>
     </div>

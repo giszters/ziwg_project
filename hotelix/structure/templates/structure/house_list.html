@@ -8,6 +8,7 @@
         <tr>
             <th>Numer i nazwa</th>
             <th>Link do pięter</th>
+            <th>Link do pomieszczeń</th>
             <th>Edycja</th>
             <th>Usuwanie</th>
         </tr>
@@ -17,6 +18,7 @@
         <tr>
             <td>{{ house.id }}) {{ house.name }}</td>
             <td><a href="{% url 'structure:floor_list' house.id %}">Piętra</a></td>
+            <td><a href="{% url 'structure:chamber_list' house.id %}">Pomieszczenia</a></td>
             <td><a href="{% url 'structure:house_edit' house.id %}">Edycja</a></td>
             <td><a href="{% url 'structure:house_delete' house.id %}">Usuń</a></td>
         </tr>

@@ -80,3 +80,10 @@ th:first-child, td:first-child{
     font-weight: bold;
     color: #CE0000;
 }
+
+#extra_image{
+    float: right;
+    margin-right: 15px;
+    margin-top: 15px;
+    position: relative;
+}

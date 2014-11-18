@@ -121,4 +121,22 @@ dla MealType i ServiceType. Najlepiej zobaczyć sobie w kodzik jak to ładnie si
 Znalazłem jakieś w miarę przyjemne CSS-y dla menu (sam nie mogłem się na to patrzeć) i zaimplementowałem,
 tzn. skopiowałem bez zastanowienia z neta. Aby nie bruździło w pliku style.css, nowe style dodałem w
 menu.css
+-----------------------------------
+2014-11-18
+Skończyłem CRUD dla modeli House, Floor i Chamber. w tej apce pozostał do napisania
+CRUD dla Room (jeszcze więcej id-ków!).
+Przyjąłem pierwszą wersję działania na URL-ach, czyli
+House ma listę na structure/
+Floor ma listę na structurę/2/list (czyli budynku o id=2)
+Room będzie miał listę na structure/2/3/list (czyli budynek 2, piętro 3)
+Dodałem 3 obrazki do pokazania którą częścią domu się posługujemy w kolejnych listach
+(niech żyje KolourPaint!), pokazanie obrazków jest zaszyte w base.html, dzięki
+czemu bez większego problemu można dodać obrazki w pozostałych częściach systemu
+(jedna zmienna więcej do widoku).
+I jeszcze aby dodawanie Floor i Chamber nie pozwalało wybierać House
+zrobiłem formularz w którym dla pola house podaję widget HiddenInput
+oraz inicjalizuje wartością podaną przekzaną za pomocą kwargsów z widoku.
+Tutaj trzeba znać trik, aby dla formularza tworzenia obiektu House.id
+wyciągnąć z URL-a bo obiekt jeszcze nie istnieje.
+-------------------------------------
 ---------------------------------------------------------------

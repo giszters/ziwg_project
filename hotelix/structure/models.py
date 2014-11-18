@@ -29,14 +29,36 @@ class Floor(models.Model):
     def __unicode__(self):
         return u"%s) floor=%s" % (self.id, self.number)
 
+    def get_verbose_name(self):
+        return self._meta.verbose_name
+
+    def get_absolute_url(self):
+        return reverse('structure:floor_edit',
+            kwargs={
+                 'pk': str(self.id),
+                 'house_id': str(self.house.id)
+             }
+        )
+
 
 class Chamber(models.Model):
     description = models.TextField(u"Opis pomieszczenia", null=True)
     house = models.ForeignKey(House, null=False)
     
     class Meta:
-        verbose_name = u"Pomieszczenie"
-        verbose_name_plural = u"Pomieszczenia"
+        verbose_name = u"Pomieszczenie spec."
+        verbose_name_plural = u"Pomieszczenia spec."
+
+    def get_verbose_name(self):
+        return self._meta.verbose_name
+
+    def get_absolute_url(self):
+        return reverse('structure:chamber_edit',
+            kwargs={
+                 'pk': str(self.id),
+                 'house_id': str(self.house.id)
+             }
+        )
 
 
 class Room(models.Model):

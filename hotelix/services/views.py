@@ -16,12 +16,9 @@ class MealTypeList(ListView):
     view_name = u"Lista posiłków"
     create_url = reverse_lazy('services:mealtype_create')
 
-
     def get_context_data(self, **kwargs):
         context = super(MealTypeList, self).get_context_data(**kwargs)
-        #import ipdb; ipdb.set_trace()
         return context
-
 
 
 class MealTypeEdit(SuccessMixin, UpdateView):
