@@ -32,7 +32,6 @@ th:first-child, td:first-child{
 }
 
 
-
 #logo{
     text-align: center;
 }
@@ -62,6 +61,7 @@ th:first-child, td:first-child{
     background-color: #ddd;
     /* display: inline-block; */
     margin-left: 210px;
+    padding-top: 10px;
     padding-bottom: 20px;
     -webkit-border-radius: 7px;
     -moz-border-radius: 7px;

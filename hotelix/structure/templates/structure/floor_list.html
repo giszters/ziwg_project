@@ -7,7 +7,7 @@
     <thead>
         <tr>
             <th>Numer piętra</th>
-            <th>---</th>
+            <th>Lista pokojów</th>
             <th>Edycja</th>
             <th>Usuwanie</th>
         </tr>
@@ -16,7 +16,7 @@
     {% for floor in object_list %}
         <tr>
             <td>{{ floor.number }}</td>
-            <td>---</td>
+            <td><a href="{% url 'structure:room_list' floor.house.id floor.id %}">Pokoje</a></td>
             <td><a href="{% url 'structure:floor_edit' floor.house.id floor.id %}">Edycja</a></td>
             <td><a href="{% url 'structure:floor_delete' floor.house.id floor.id %}">Usuń</a></td>
         </tr>

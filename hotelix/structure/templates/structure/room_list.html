@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Lista pokojów piętra nr <span style="text-decoration: underline">{{ floor_number }}</span></h3>
+<a href="{% url 'structure:room_create' house_id floor_id %}"><button>Nowy pokój</button></a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nazwa pokoju</th>
+            <th>Liczba łóżek</th>
+            <th>Dla niepełnosp.</th>
+            <th>Edycja</th>
+            <th>Usuwanie</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for room in object_list %}
+        <tr>
+            <td>{{ room.name }}</td>
+            <td>{{ room.beds }}</td>
+            {% if room.for_disabled %}
+                <td>Tak</td>
+            {% else %}
+                <td>Nie</td>
+            {% endif %}
+            <td><a href="{% url 'structure:room_edit' room.floor.house.id room.floor.id room.id %}">Edycja</a></td>
+            <td><a href="{% url 'structure:room_delete' room.floor.house.id room.floor.id room.id %}">Usuń</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

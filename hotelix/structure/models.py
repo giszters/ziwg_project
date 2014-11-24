@@ -71,7 +71,19 @@ class Room(models.Model):
     def __unicode__(self):
         return u"%s) floor=%s, name=%s beds=%s" %\
             (self.id, self.floor.number, self.name, self.beds)
-    
+
     class Meta:
         verbose_name = u"Pokój"
         verbose_name_plural = u"Pokoje"
+
+    def get_verbose_name(self):
+        return self._meta.verbose_name
+
+    def get_absolute_url(self):
+        return reverse('structure:room_edit',
+            kwargs={
+                 'pk': str(self.id),
+                 'house_id': str(self.floor.house.id),
+                 'floor_id': str(self.floor.id)
+             }
+        )

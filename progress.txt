@@ -139,4 +139,23 @@ oraz inicjalizuje wartością podaną przekzaną za pomocą kwargsów z widoku.
 Tutaj trzeba znać trik, aby dla formularza tworzenia obiektu House.id
 wyciągnąć z URL-a bo obiekt jeszcze nie istnieje.
 -------------------------------------
+2014-11-24
+Napisałem CRUD dla Room i prawie skończyłem apkę structure.
+Stwierdziłem że nie obejdzie się bez breadcrumbsów (linki nawigacyjne)
+I zacząłem rzeźbić... :D Ściągnąłem całkiem ładne CSS-y i zacząłem je 
+dostosowywać do wyglądu naszej apki (czuje że będzie rządzić niebieski i czerń :D)
+Widok, który będzie chciał pokazać breadcrumbsy musi implementować metodę get_breadcrumbs.
+A ta metoda z kolei zwraca listę ze słownikami, gdzie każdy słownik ma 3 elementy:
+url -> reverse_lazy na url
+name -> co ma się pokazać na labelu
+lightness (:D) - światłość -> zmienna wyliczana dla HSL
+HSL to system zapisu koloru, który całkiem wygodnie pozwala
+rozjaśniać i ściemniać obiekty (http://en.wikipedia.org/wiki/HSL_and_HSV)
+Aby nie liczyć na piechotę wartości lightness napisałem funkcję w hotelix.views
+którą nazwałem compute_lightness - uzupełnia ona słowniki w liście
+dodając klucz lightness i wartość zależną od długości listy (nareszcie jakiś algorytmik :D)
+BTW. pierwszy raz w życiu wykorzystałem pętlę for w templatce, aby zrobić dynamiczne CSS-y \o/
+Użycie możno oglądać wchodząc do listy domów - później chcę aby było tak ładnie w każdym
+widoku apki structure.
 ---------------------------------------------------------------
+

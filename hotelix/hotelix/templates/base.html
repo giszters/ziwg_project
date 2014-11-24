@@ -6,6 +6,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/breadcrumbs.css' %}">
     <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
     <!-- jQuery UI -->
     <script src="{% static 'ui/jquery-ui.min.js' %}"></script>
@@ -57,6 +58,24 @@
                 <img src="{% static view.extra_image %}" alt="extra image">
             </div>
             {% endif %}
+            {% if view.get_breadcrumbs %}
+                {# generate dynamic breadcrumbs color with hsl #}
+                <style type="text/css">
+                {% for breadcrumb in view.get_breadcrumbs %}
+                    .breadcrumb li:nth-child({{ forloop.counter }}) a{
+                        background: hsla(205,80%,{{ breadcrumb.lightness }}%,1);
+                    }
+                    .breadcrumb li:nth-child({{ forloop.counter }}) a:after{
+                        border-left-color: hsla(205,80%,{{ breadcrumb.lightness }}%,1);
+                    }
+                {% endfor %} 
+                </style>
+                <ul class="breadcrumb">
+                {% for breadcrumb in view.get_breadcrumbs %}
+                    <li><a href="{{ breadcrumb.url }}">{{ breadcrumb.name }}</a></li>
+                {% endfor %}
+                </ul>
+            {% endif%}
             {% block content %}{% endblock %}
         </div>
     </div>

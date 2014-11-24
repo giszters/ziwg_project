@@ -4,15 +4,27 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from hotelix.views import SuccessMixin
-from structure.forms import FloorForm, ChamberForm
-from structure.models import House, Floor, Chamber
+from hotelix.views import SuccessMixin,compute_lightness
+from structure.forms import FloorForm, ChamberForm, RoomForm
+from structure.models import House, Floor, Chamber, Room
 
 
 """ HOUSE model """
 class HouseList(ListView):
     model = House
     extra_image = 'img/house.png'
+
+    def get_breadcrumbs(self):
+        urls = [
+            {'url':'#', 'name': u'Domy'},
+            {'url':'#', 'name': u'Edycja domu'},
+            {'url':'#', 'name': u'Piętra'},
+            {'url':'#', 'name': u'Edycja piętra'},
+            {'url':'#', 'name': u'Pokoje'},
+            {'url':'#', 'name': u'Edycja pokoju'},
+        ]
+        compute_lightness(urls)
+        return urls
 
 
 class HouseCreate(CreateView):
@@ -79,6 +91,65 @@ class FloorDelete(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('structure:floor_list', args=[self.kwargs['house_id']])
+
+    def get_discard_url(self):
+        return self.get_success_url()
+    discard_url = property(get_discard_url)
+
+
+""" ROOM model """
+class RoomList(ListView):
+    model = House
+    extra_image = 'img/room.png'
+    
+    def get_queryset(self):
+        floor_id = self.kwargs['floor_id']
+        return Room.objects.filter(floor_id=floor_id)
+
+    def get_context_data(self, **kwargs):
+        context = super(RoomList, self).get_context_data(**kwargs)
+        context['floor_id'] = self.kwargs['floor_id']
+        context['house_id'] = self.kwargs['house_id']
+        context['floor_number'] =\
+            Floor.objects.get(pk=self.kwargs['floor_id']).number
+        return context
+
+
+class RoomCreate(CreateView):
+    template_name = "create.html"
+    model = Room
+    form_class = RoomForm
+    
+    def get_form_kwargs(self):
+        kwargs = super(RoomCreate, self).get_form_kwargs()
+        kwargs['floor_id'] = self.kwargs['floor_id']
+        return kwargs
+
+    def get_success_url(self):
+        kw = self.kwargs
+        return reverse_lazy('structure:room_list', args=[kw['house_id'],
+                                                         kw['floor_id']])
+
+
+class RoomEdit(SuccessMixin, UpdateView):
+    model = Room
+    template_name = 'edit.html'
+    form_class = RoomForm
+    
+    def get_form_kwargs(self):
+        kwargs = super(RoomEdit, self).get_form_kwargs()
+        kwargs['floor_id'] = kwargs['instance'].floor.id
+        return kwargs
+
+
+class RoomDelete(DeleteView):
+    template_name = 'delete.html'
+    model = Room
+
+    def get_success_url(self):
+        kw = self.kwargs
+        return reverse_lazy('structure:room_list', args=[kw['house_id'],
+                                                         kw['floor_id']])
 
     def get_discard_url(self):
         return self.get_success_url()
