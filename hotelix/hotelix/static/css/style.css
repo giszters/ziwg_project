@@ -31,6 +31,12 @@ th:first-child, td:first-child{
     border-left: 1px solid #3cdfff
 }
 
+button{
+    background-color: #2175bc;
+    color: #fff;
+    margin-left: 15px;
+    cursor: pointer;
+}
 
 #logo{
     text-align: center;
@@ -43,12 +49,17 @@ th:first-child, td:first-child{
     float: right;
     font-size: 12px;
     font-weight: bold;
-    background-color: #F6FEFF;
+    background-color: #2175bc;
     text-align: center;
     text-transform: uppercase;
 }
 #logout a{
     text-decoration: none;
+    color: #fff;
+}
+#logout a:hover{
+    text-decoration: underline;
+    color: #fff;
 }
 
 /* http://stackoverflow.com/a/446097 */
