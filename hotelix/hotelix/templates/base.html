@@ -64,9 +64,11 @@
                 {% for breadcrumb in view.get_breadcrumbs %}
                     .breadcrumb li:nth-child({{ forloop.counter }}) a{
                         background: hsla(205,80%,{{ breadcrumb.lightness }}%,1);
+                        color: hsla({{ breadcrumb.fontcolor }});
                     }
                     .breadcrumb li:nth-child({{ forloop.counter }}) a:after{
                         border-left-color: hsla(205,80%,{{ breadcrumb.lightness }}%,1);
+                        color: hsla({{ breadcrumb.fontcolor }});
                     }
                 {% endfor %} 
                 </style>

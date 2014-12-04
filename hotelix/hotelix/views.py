@@ -22,3 +22,6 @@ def compute_lightness(breadcrums_list):
     for i in xrange(l):
         # magic, huh?
         breadcrums_list[i]['lightness'] = str("%.1f" % (40 + (50.0/l)*i))
+        breadcrums_list[i]['fontcolor'] = str("0, 100%%, %.1f%%, 1" % (100 - (70.0/l)*i))
+    return breadcrums_list
+            

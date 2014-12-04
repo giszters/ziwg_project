@@ -158,4 +158,17 @@ BTW. pierwszy raz w życiu wykorzystałem pętlę for w templatce, aby zrobić d
 Użycie możno oglądać wchodząc do listy domów - później chcę aby było tak ładnie w każdym
 widoku apki structure.
 ---------------------------------------------------------------
+2014-12-04
+Dodałem breadcrumbsy do wszystkich widoków apki Structure.
+Aby się nie powtarzać w widokach structure napisałem nowy Mixin
+do obsługi breadcrumbsów, w którym dodałem nawet obsługę błędów.
+Dzięki temu że ten Mixin jest, za pomocą dwóch lub trzech dodatkowych zmiennych w samym
+konkretnym widoku powodujemy tworzenie breadcrumbsów.
+bs_length - określa liczbę url-i z generowanej listy
+bs_house_prefix (floor_prefix, room_prefix) określna nazwę id z kwargsa z URL
+is_chamber - określa czy jesteśmy w widokach pomieszczenia (default=False)
+Kolejna rzecz którą widzę dla siebie to generowanie raportów za pobyt
+oraz raportów działalności hotelu.
+Wczesna pora, idę na/po browara :D
+-----------------------------------------------------------------
 
