@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Czy na pewno chcesz usunąć budynek {{ object.name }}?</h3>
+    <div>
+    <form method="post" action="{% url 'structure:house_delete' object.id %}" style="display: inline;">
+       {% csrf_token %}
+       <input type="submit" value="Tak" />
+    </form>
+
+    <a href="{% url 'structure:house_list' %}"><button type="button">Nie</button></a>
+    </div>
+{% endblock %}

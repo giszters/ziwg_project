@@ -68,4 +68,107 @@ https://docs.djangoproject.com/en/dev/topics/http/urls/#url-namespaces-and-inclu
 Jutro pojadę z widokami generycznymi dla created, updated i deleted. Będzie trzeba jeszcze pomyśleć
 o rozwiązaniu uprawnień - żeby recepcjonista nie mógł w tym dłubać (może jakiś Mixin...(?))
 ---------------
+2014-11-07 (1 kasztelan)
+Dodałem cały CRUD dla obiektu House. Najtrudniej jest się przebić przez niezbędne ustawienia.
+Teraz postawienie kolejnych widoków dla Floor i Room jest prawie formalnością.
+Póki co nie wykorzystujemy ModelForm'ów, ale gdzieś się niedługo pojawią.
+Dodałem plik jQuery w wersji 1.11.1, bo nie wyobrażam sobie rzeźbić na czystym Jacascripcie
+Znalazłem w sieci jakieś znośne CSS-y dla tabelek i zaimplementowałem.
+
+Do przemyślenia są URL-e dla aplikacji structure. Czy pchamy się w zagnieżdżenia, np
+house/12/floor/1/room/3, czy też może
+floor/12/ dla takiej przykładowej edycji piętra.
+Pierwszy sposób jest o tyle łatwiejszy że dla danego budynku mamy "za darmo" w URL-u
+jego piętra. Tzn łatwo wyciągnąć dla piętra id obiektu jego ojca (tutaj budynek).
+------------------------
+2014-11-09 godz 19:15
+Dodałem obydwa modele do aplikacji client.
+Dodałem modele do panelu admina
+Dodałem widok listy Klientów (osób), zaczynając widoki w tej apce
+Dodałem linki w menu
+--------------------------
+2014-11-10
+Dodałem wszystkie modele aplikacje services. Dodałem do modeli ServiceOrder i MealOrder oddzielne pole
+order_time, które będzie stanowić godzinę wydania posiłku/atrakcji. Przyjąłem że godziny się nie wpisuje
+jeśli hotel robi akcję o konkretnej godzinie, np. śniadanie o 8 rano.
+Dodałem te modele do panelu admina
+Napisałem CRUD-y dla modeli MealType i ServiceType. (nowe linki w menu)
+Z racji że te modele są bardzo do siebie podobne, oraz że warto trzymać się zasady DRY
+zacząłem pisać w apce hotelix uniwersalne szablony dla zadań create, edit i delete.
+Szablony te wymagają dodania nowych pól do widoków, oraz metod na modelach - taka trochę magia, ale fajnie się później z tego korzysta
+Napisałem jeden wspólny szablon do zrobienia list posiłków i usług dodatkowych, znów zasada DRY (ps. niech żyje kacze typowanie \o/)
+Kolejna taka mała magia to to, że napisałem SuccessMixin, który dla widoków edit zapewnia dodanie do URL-a części GET "?success=1"
+Żeby Mixin zadziałał trzeba po nim podziedziczyć w widoku. Przypominam że w Pythonie można dziedziczyć po wielu klasach
+a jeśli metody się powtarzają to pierwszeństwo ma ta z klasy najwcześniej zadeklarowanej, np
+class C(A,B):
+    def foo(self): print bar() # wywoła się metoda A.bar(), o ile taka metoda na klasie A istnieje
+PS. Coraz bardziej nęci mnie myśl napisania testów jednostkowych (przeklikiwanie CRUD-ów zaczyna być męczące).
+---------------------------------
+2014-11-12
+Dodałem listę i edycję do modelu MealOrder. Tutaj pojawiła się nareszcie :-) konieczność
+wykorzystywania formularza Djangowego, ale że korzystamy z widoków generycznych to używam ModelForm
+Żeby nie było zbyt prosto dopiąłem do projektu całe fobrodziejstwo jQuery-ui, gdzie jest m.in DatePicker.
+DatePicker wykorzystuję do ustawiania dat. Dodałem do DatePickera j.polski. Link trochę upierdliwy do znalezienia
+http://bugs.jqueryui.com/attachment/ticket/5522/jquery.ui.datepicker-pl.js
+I aby ułatwić wybór godziny podania dania, ustawiłem zakres czasu od 10:00 do 18:30 z przerwami co pół h.
+Teraz jeszcze tylko troszkę zabawy, żeby zrobić dodawania i usuwanie zamówienia dań.
+Zamówienie dodatkowej usługi pójdzie analogicznie, wykorzystam większość formularza który napisałem dzisiaj
+---------------------------------------------------------------
+2014-11-13 (2h po lubelskiej perle się chyba nie liczy...)
+Skończyłem cały services, czyli mamy całe CRUD-y dla MealOrder, MealType, ServiceOrder, ServiceType.
+Aby nie powtarzać kodu zrobiłem wspólny CommonOrderForm po którym dziedziczą formularze
+dla MealType i ServiceType. Najlepiej zobaczyć sobie w kodzik jak to ładnie sie przedstawia.
+Znalazłem jakieś w miarę przyjemne CSS-y dla menu (sam nie mogłem się na to patrzeć) i zaimplementowałem,
+tzn. skopiowałem bez zastanowienia z neta. Aby nie bruździło w pliku style.css, nowe style dodałem w
+menu.css
+-----------------------------------
+2014-11-18
+Skończyłem CRUD dla modeli House, Floor i Chamber. w tej apce pozostał do napisania
+CRUD dla Room (jeszcze więcej id-ków!).
+Przyjąłem pierwszą wersję działania na URL-ach, czyli
+House ma listę na structure/
+Floor ma listę na structurę/2/list (czyli budynku o id=2)
+Room będzie miał listę na structure/2/3/list (czyli budynek 2, piętro 3)
+Dodałem 3 obrazki do pokazania którą częścią domu się posługujemy w kolejnych listach
+(niech żyje KolourPaint!), pokazanie obrazków jest zaszyte w base.html, dzięki
+czemu bez większego problemu można dodać obrazki w pozostałych częściach systemu
+(jedna zmienna więcej do widoku).
+I jeszcze aby dodawanie Floor i Chamber nie pozwalało wybierać House
+zrobiłem formularz w którym dla pola house podaję widget HiddenInput
+oraz inicjalizuje wartością podaną przekzaną za pomocą kwargsów z widoku.
+Tutaj trzeba znać trik, aby dla formularza tworzenia obiektu House.id
+wyciągnąć z URL-a bo obiekt jeszcze nie istnieje.
+-------------------------------------
+2014-11-24
+Napisałem CRUD dla Room i prawie skończyłem apkę structure.
+Stwierdziłem że nie obejdzie się bez breadcrumbsów (linki nawigacyjne)
+I zacząłem rzeźbić... :D Ściągnąłem całkiem ładne CSS-y i zacząłem je 
+dostosowywać do wyglądu naszej apki (czuje że będzie rządzić niebieski i czerń :D)
+Widok, który będzie chciał pokazać breadcrumbsy musi implementować metodę get_breadcrumbs.
+A ta metoda z kolei zwraca listę ze słownikami, gdzie każdy słownik ma 3 elementy:
+url -> reverse_lazy na url
+name -> co ma się pokazać na labelu
+lightness (:D) - światłość -> zmienna wyliczana dla HSL
+HSL to system zapisu koloru, który całkiem wygodnie pozwala
+rozjaśniać i ściemniać obiekty (http://en.wikipedia.org/wiki/HSL_and_HSV)
+Aby nie liczyć na piechotę wartości lightness napisałem funkcję w hotelix.views
+którą nazwałem compute_lightness - uzupełnia ona słowniki w liście
+dodając klucz lightness i wartość zależną od długości listy (nareszcie jakiś algorytmik :D)
+BTW. pierwszy raz w życiu wykorzystałem pętlę for w templatce, aby zrobić dynamiczne CSS-y \o/
+Użycie możno oglądać wchodząc do listy domów - później chcę aby było tak ładnie w każdym
+widoku apki structure.
+---------------------------------------------------------------
+2014-12-04
+Dodałem breadcrumbsy do wszystkich widoków apki Structure.
+Aby się nie powtarzać w widokach structure napisałem nowy Mixin
+do obsługi breadcrumbsów, w którym dodałem nawet obsługę błędów.
+Dzięki temu że ten Mixin jest, za pomocą dwóch lub trzech dodatkowych zmiennych w samym
+konkretnym widoku powodujemy tworzenie breadcrumbsów.
+bs_length - określa liczbę url-i z generowanej listy
+bs_house_prefix (floor_prefix, room_prefix) określna nazwę id z kwargsa z URL
+is_chamber - określa czy jesteśmy w widokach pomieszczenia (default=False)
+Kolejna rzecz którą widzę dla siebie to generowanie raportów za pobyt
+oraz raportów działalności hotelu.
+Wczesna pora, idę na/po browara :D
+-----------------------------------------------------------------
 

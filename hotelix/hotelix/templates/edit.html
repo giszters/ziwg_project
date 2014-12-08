@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Edytuj {{ object.get_verbose_name }}{% if object.name %} - {{ object.name }} {% endif %}</h3>
+    <form action="{{ object.get_absolute_url }}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Zapisz" />
+    </form>
+{% endblock %}

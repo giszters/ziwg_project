@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Zamówienia posiłków</h3>
+    <a href="{{ view.create_url }}"><button>Utwórz {{ view.model.get_verbose_name }}</button></a>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Klient</th>
+            <th>Rodzaj</th>
+            <th>Cena za 1</th>
+            <th>Porcje</th>
+            <th>Rozpoczęcie</th>
+            <th>Zakończenie</th>
+            <th>Czas podania</th>
+            <th>Edycja</th>
+            <th>Usuń</th>
+        </tr>
+    {% for meal_order in object_list %}
+        <tr>
+            <td>{{ meal_order.id }}</td>
+            <td>{{ meal_order.client.name }}</td>
+            <td>{{ meal_order.meal_type.name }}</td>
+            <td>{{ meal_order.price }}</td>
+            <td>{{ meal_order.serving }}</td>
+            <td>{{ meal_order.start_time }}</td>
+            <td>{{ meal_order.stop_time }}</td>
+            <td>{{ meal_order.order_time }}</td>
+            <td><a href="{% url 'services:mealorder_edit' meal_order.id %}">Edytuj</a></td>
+            <td><a href="{% url 'services:mealorder_delete' meal_order.id %}">Usuń</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

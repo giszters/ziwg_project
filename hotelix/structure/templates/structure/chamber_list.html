@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Lista pomieszczeń specjalnych budynku: <span style="text-decoration: underline">{{ house_name }}</span></h3>
+<a href="{% url 'structure:chamber_create' house_id %}"><button>Nowe pomieszczenie</button></a>
+<table>
+    <thead>
+        <tr>
+            <th>Opis</th>
+            <th>Edycja</th>
+            <th>Usuwanie</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for chamber in object_list %}
+        <tr>
+            <td>{{ chamber.description }}</td>
+            <td><a href="{% url 'structure:chamber_edit' house_id chamber.id %}">Edycja</a></td>
+            <td><a href="{% url 'structure:chamber_delete' house_id chamber.id %}">Usuń</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table> 
+{% endblock %}

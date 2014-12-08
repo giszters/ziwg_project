@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Zamówienia usług</h3>
+    <a href="{{ view.create_url }}"><button>Utwórz {{ view.model.get_verbose_name }}</button></a>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Klient</th>
+            <th>Rodzaj</th>
+            <th>Cena</th>
+            <th>Rozpoczęcie</th>
+            <th>Zakończenie</th>
+            <th>Czas wykonania</th>
+            <th>Edycja</th>
+            <th>Usuń</th>
+        </tr>
+    {% for service_order in object_list %}
+        <tr>
+            <td>{{ service_order.id }}</td>
+            <td>{{ service_order.client.name }}</td>
+            <td>{{ service_order.service_type.name }}</td>
+            <td>{{ service_order.price }}</td>
+            <td>{{ service_order.start_time }}</td>
+            <td>{{ service_order.stop_time }}</td>
+            {% if service_order.order_time %} 
+                <td>{{ service_order.order_time }}</td>
+            {% else %}
+                <td>---</td>
+            {% endif %}
+            <td><a href="{% url 'services:serviceorder_edit' service_order.id %}">Edytuj</a></td>
+            <td><a href="{% url 'services:serviceorder_delete' service_order.id %}">Usuń</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

@@ -1,6 +1,42 @@
 body{
     background-color: #ABFF8A;
 }
+/* nice styles for table, a little downgrade http://veerle-v2.duoh.com/blog/comments/a_css_styled_table/ */
+table {
+    /* border-collapse: collapse; */
+    border-spacing: 0;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+th {
+    font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica,sans-serif;
+    border-right: 1px solid #3cdfff;
+    border-bottom: 1px solid #3cdfff;
+    border-top: 1px solid #3cdfff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 6px 6px 6px 12px;
+    background-color: #CAE8EA;
+}
+td {
+    border-right: 1px solid #3cdfff;
+    border-bottom: 1px solid #3cdfff;
+    background: #fff;
+    padding: 6px 6px 6px 12px;
+    font-size: 11px;
+}
+th:first-child, td:first-child{
+    /* border-left: 1px solid #C1DAD7 */;
+    border-left: 1px solid #3cdfff
+}
+
+button{
+    background-color: #2175bc;
+    color: #fff;
+    margin-left: 15px;
+    cursor: pointer;
+}
 
 #logo{
     text-align: center;
@@ -13,12 +49,17 @@ body{
     float: right;
     font-size: 12px;
     font-weight: bold;
-    background-color: #F6FEFF;
+    background-color: #2175bc;
     text-align: center;
     text-transform: uppercase;
 }
 #logout a{
     text-decoration: none;
+    color: #fff;
+}
+#logout a:hover{
+    text-decoration: underline;
+    color: #fff;
 }
 
 /* http://stackoverflow.com/a/446097 */
@@ -27,15 +68,33 @@ body{
 }
 #content{
     /* margin-left: 20%; */
-    width: 800px;
+    width: 1000px;
     background-color: #ddd;
     /* display: inline-block; */
     margin-left: 210px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
 }
 
-#menu{
+.menu{
     width: 200px;
     background-color: #3CDFFF;
     /* display: inline-block; */
     float: left;
+}
+
+/* decorate djago elements */
+.errorlist{
+    font-weight: bold;
+    color: #CE0000;
+}
+
+#extra_image{
+    float: right;
+    margin-right: 15px;
+    margin-top: 15px;
+    position: relative;
 }

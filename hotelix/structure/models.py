@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.core.urlresolvers import reverse
 from django.db import models
 
 # Create your models here.
@@ -10,9 +11,11 @@ class House(models.Model):
         verbose_name = u"Budynek"
         verbose_name_plural = u"Budynki"
         
-
     def __unicode__(self):
         return u"%s) %s" % (self.id, self.name)
+
+    def get_absolute_url(self):
+        return reverse('structure:house_edit', kwargs={'pk': str(self.id)})
 
 
 class Floor(models.Model):
@@ -26,14 +29,36 @@ class Floor(models.Model):
     def __unicode__(self):
         return u"%s) floor=%s" % (self.id, self.number)
 
+    def get_verbose_name(self):
+        return self._meta.verbose_name
+
+    def get_absolute_url(self):
+        return reverse('structure:floor_edit',
+            kwargs={
+                 'pk': str(self.id),
+                 'house_id': str(self.house.id)
+             }
+        )
+
 
 class Chamber(models.Model):
     description = models.TextField(u"Opis pomieszczenia", null=True)
     house = models.ForeignKey(House, null=False)
     
     class Meta:
-        verbose_name = u"Pomieszczenie"
-        verbose_name_plural = u"Pomieszczenia"
+        verbose_name = u"Pomieszczenie spec."
+        verbose_name_plural = u"Pomieszczenia spec."
+
+    def get_verbose_name(self):
+        return self._meta.verbose_name
+
+    def get_absolute_url(self):
+        return reverse('structure:chamber_edit',
+            kwargs={
+                 'pk': str(self.id),
+                 'house_id': str(self.house.id)
+             }
+        )
 
 
 class Room(models.Model):
@@ -46,7 +71,19 @@ class Room(models.Model):
     def __unicode__(self):
         return u"%s) floor=%s, name=%s beds=%s" %\
             (self.id, self.floor.number, self.name, self.beds)
-    
+
     class Meta:
         verbose_name = u"Pokój"
         verbose_name_plural = u"Pokoje"
+
+    def get_verbose_name(self):
+        return self._meta.verbose_name
+
+    def get_absolute_url(self):
+        return reverse('structure:room_edit',
+            kwargs={
+                 'pk': str(self.id),
+                 'house_id': str(self.floor.house.id),
+                 'floor_id': str(self.floor.id)
+             }
+        )

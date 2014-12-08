@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if object.name %}
+        <h3>Czy na pewno chcesz usunąć "{{ object.name }}"?</h3>
+    {% elif object.get_name %}
+        <h3>Czy na pewno chcesz usunąć "{{ object.get_name }}"?</h3>
+    {% else %}
+        <h3>Czy na pewno chcesz usunąć ten obiekt?</h3>
+    {% endif %}
+    <div>
+    <form method="post" action="{{ object.get_delete_url }}" style="display: inline;">
+       {% csrf_token %}
+       <input type="submit" value="Tak" />
+    </form>
+
+    <a href="{{ view.discard_url }}"><button type="button">Nie</button></a>
+    </div>
+{% endblock %}
