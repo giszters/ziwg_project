@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3 style="display: inline;">Dom: {{ house.name }}</h3>
+<div style="display: inline;">
+    Zmień:
+    <select id="change_house">
+        {% for opt in all_houses %}
+            <option {% if opt.id == house.id %}selected="selected"{% endif %}
+                    value="{{ opt.id }}">{{ opt.name }}</option>
+        {% endfor %}
+    </select> 
+</div>
+{% comment %}
+{% for floor in floors %}
+    <h3>Pietro {{ floor.id }}</h3>
+    <ul>
+    {% for room in floor.rooms %}
+        <ul>Pokój {{ room.name }} {{ room.orders }}</ul>
+    {% endfor %}
+    </ul>
+{% endfor %}
+{% endcomment %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Układ</th>
+            {% for date in date_range %}
+            <th>{{ date|date:"m-d" }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    {% for floor_number, rooms in orders.items %}
+        <tr><td colspan="15" style="background-color: #FFEDC3;">Piętro: {{ floor_number }}</td></tr>
+        {% for room_name, dates in rooms.items %}
+            <tr><td>Pokój: {{ room_name }}</td>
+            {% for reserved in dates %}
+                <td>{{ reserved }}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+
+{% block footer %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $("#change_house").change(function(){
+            var house_id = $(this).val();
+            document.location.href = "{% url 'client:order_list' %}?house_id=" + house_id;
+        });
+    </script>
+{% endblock %}
+
