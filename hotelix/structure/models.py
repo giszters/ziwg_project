@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -87,3 +88,12 @@ class Room(models.Model):
                  'floor_id': str(self.floor.id)
              }
         )
+
+    def is_reserved(self, date):
+        date_min = datetime.datetime.combine(date, datetime.time.min)
+        date_max = datetime.datetime.combine(date, datetime.time.max)
+        b = bool(self.order_set.filter(arrival_time__lt=date_min)
+                               .filter(departure_time__gt=date_max))
+        b |= bool(self.order_set.filter(arrival_time__contains=date))
+        b |= bool(self.order_set.filter(departure_time__contains=date))
+        return b

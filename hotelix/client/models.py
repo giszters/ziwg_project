@@ -48,3 +48,4 @@ class Order(models.Model):
 
     def __unicode__(self):
         return u"zamówienie %s), klient: %s" % (self.id, self.client.name)
+
