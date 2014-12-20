@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block content %}
 <h3 style="display: inline;">Dom: {{ house.name }}</h3>
@@ -9,7 +10,12 @@
             <option {% if opt.id == house.id %}selected="selected"{% endif %}
                     value="{{ opt.id }}">{{ opt.name }}</option>
         {% endfor %}
-    </select> 
+    </select>
+</div>
+<div>
+    <label>Dzień początkowy<input type="text" class="date_picker" id="start_date" />
+    {% comment %}<label>Dzień końcowy<input type="text" class="date_picker" />{% endcomment %}
+    <button id="change_date_btn">Zmień</button> 
 </div>
 {% comment %}
 {% for floor in floors %}
@@ -36,8 +42,12 @@
         <tr><td colspan="15" style="background-color: #FFEDC3;">Piętro: {{ floor_number }}</td></tr>
         {% for room_name, dates in rooms.items %}
             <tr><td>Pokój: {{ room_name }}</td>
-            {% for reserved in dates %}
-                <td>{{ reserved }}</td>
+            {% for room_desc in dates %}
+                {% if room_desc.is_reserved %}
+                <td style="background-color: {{ room_desc.bgcolor }}"><img src="{% static 'img/full.png' %}" /></td>
+                {% else %}
+                <td>Nie</td>
+                {% endif %}
             {% endfor %}
             </tr>
         {% endfor %}
@@ -50,10 +60,23 @@
 {% block footer %}
     {{ block.super }}
     <script type="text/javascript">
+        function call_view(){ 
+            var get_params = "?";
+            get_params += "house_id=" + $("#change_house").val();
+            get_params += "&start_date=" +  $("#start_date").val();
+            document.location.href = "{% url 'client:order_list' %}" + get_params;
+        }
         $("#change_house").change(function(){
+            call_view();
+            /*
             var house_id = $(this).val();
             document.location.href = "{% url 'client:order_list' %}?house_id=" + house_id;
+            */
         });
+        $("#change_date_btn").click(function(){
+            call_view();
+        });
+        
     </script>
 {% endblock %}
 

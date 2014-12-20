@@ -92,8 +92,14 @@ class Room(models.Model):
     def is_reserved(self, date):
         date_min = datetime.datetime.combine(date, datetime.time.min)
         date_max = datetime.datetime.combine(date, datetime.time.max)
-        b = bool(self.order_set.filter(arrival_time__lt=date_min)
-                               .filter(departure_time__gt=date_max))
-        b |= bool(self.order_set.filter(arrival_time__contains=date))
-        b |= bool(self.order_set.filter(departure_time__contains=date))
-        return b
+        o1 = self.order_set.filter(arrival_time__lt=date_min)\
+                           .filter(departure_time__gt=date_max)
+        o2 = self.order_set.filter(arrival_time__contains=date)
+        o3 = self.order_set.filter(departure_time__contains=date)
+        bgcolor = ''
+        flag = False
+        for order in (o1, o2, o3):
+            if order.count() > 0:
+                flag = True
+                bgcolor = order[0].get_color()
+        return flag, bgcolor
