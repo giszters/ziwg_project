@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Lista rezerwacji</h3>
+    {% comment %}
+<a href="{% url 'client:client_create' %}">Nowy budynek</a>
+{% endcomment %}
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Liczba gości</th>
+            <th>Liczba niepełnosprawnych</th>
+            <th>Data przyjazdu</th>
+            <th>Data wyjazdu</th>
+            <th>Cena za noc</th>
+            <th>Klient</th>
+            <th>Edycja</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in order_list %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.number_of_people }}</td>
+                <td>{{ order.number_of_disabled }}</td>
+                <td>{{ order.arrival_time }}</td>
+                <td>{{ order.departure_time }}</td>
+                <td>{{ order.price_per_nigth }}</td>
+                <td>{{ order.client }}</td>
+                <td><a href="{% url 'client:order_edit' order.id %}">Edytuj</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
