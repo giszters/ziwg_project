@@ -21,3 +21,13 @@ class OrderEdit(SuccessMixin, UpdateView):
 
 class OrderList(ListView):
     model = Order
+
+
+class OrderCreate(ListView):
+    model = Order
+    template_name = 'create.html'
+
+
+class OrderDelete(ListView):
+    model = Order
+    template_name = 'delete.html'
