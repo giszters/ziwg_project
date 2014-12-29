@@ -14,8 +14,10 @@
 </div>
 <div>
     <label>Dzień początkowy<input type="text" class="date_picker" id="start_date" />
-    {% comment %}<label>Dzień końcowy<input type="text" class="date_picker" />{% endcomment %}
-    <button id="change_date_btn">Zmień</button> 
+    {% comment %}
+        <label>Dzień końcowy<input type="text" class="date_picker" />
+        <button id="change_date_btn">Zmień</button>
+    {% endcomment %}
 </div>
 {% comment %}
 {% for floor in floors %}
@@ -33,20 +35,31 @@
         <tr>
             <th>Układ</th>
             {% for date in date_range %}
-            <th>{{ date|date:"m-d" }}</th>
+            <th colspan="2">{{ date|date:"d.m" }}</th>
             {% endfor %}
         </tr>
     </thead>
     <tbody>
     {% for floor_number, rooms in orders.items %}
-        <tr><td colspan="15" style="background-color: #FFEDC3;">Piętro: {{ floor_number }}</td></tr>
+        {% comment %}colspan == 2*date_count + 1{% endcomment %}
+        <tr><td colspan="29" style="background-color: #FFEDC3;">Piętro: {{ floor_number }}</td></tr>
         {% for room_name, dates in rooms.items %}
-            <tr><td>Pokój: {{ room_name }}</td>
+            <tr><td>{{ room_name }}</td>
             {% for room_desc in dates %}
-                {% if room_desc.is_reserved %}
-                <td style="background-color: {{ room_desc.bgcolor }}"><img src="{% static 'img/full.png' %}" /></td>
+                {% if room_desc.first_half %}
+                    <td style="background-color: {{ room_desc.bgcolor }}"></td>
                 {% else %}
-                <td>Nie</td>
+                    <td>&nbsp</td>
+                {% endif %}
+
+                {% if room_desc.second_half %}
+                    <td style="background-color: {{ room_desc.bgcolor }}">
+                        <a href="{% url 'client:order_edit' room_desc.order_id %}">
+                            {{ room_desc.order_id }}
+                        </a>
+                    </td>
+                {% else %}
+                    <td>-></td>
                 {% endif %}
             {% endfor %}
             </tr>
@@ -60,7 +73,7 @@
 {% block footer %}
     {{ block.super }}
     <script type="text/javascript">
-        function call_view(){ 
+        function call_view(){
             var get_params = "?";
             get_params += "house_id=" + $("#change_house").val();
             get_params += "&start_date=" +  $("#start_date").val();
@@ -73,10 +86,24 @@
             document.location.href = "{% url 'client:order_list' %}?house_id=" + house_id;
             */
         });
+        /*
         $("#change_date_btn").click(function(){
             call_view();
         });
-        
+
+        $("#start_date").click(function(){
+            call_view();
+        });
+        */
+        $("#start_date").datepicker({
+            onSelect: function(dateText) {
+                console.log(dateText);
+                call_view();
+            },
+            firstDay: 1,
+            dateFormat: "yy-mm-dd"
+        });
+
     </script>
 {% endblock %}
 

@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, \
     TemplateView
-from client.models import Client
+from client.models import Client, Order
 from structure.models import House, Floor, Room
 
 
@@ -28,9 +28,11 @@ class OrderList(TemplateView):
         all_houses = House.objects.order_by('id')
         house = House.objects.get(pk=house_id) if house_id else all_houses[0]
         floors = Floor.objects.filter(house=house)
+        print "start_date",start_date
 
         if len(start_date) > 0:
-            raise NotImplementedError("hehe")
+            d1 = datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+            d2 = d1 + timedelta(13)
         else: # default datetimes
             d1 = datetime.date(2014, 11, 3)
             d2 = datetime.date(2014, 11, 16)
@@ -41,14 +43,8 @@ class OrderList(TemplateView):
             orders[floor.number] = OrderedDict()
             for room in floor.rooms.all():
                 room_description = []
-                bgcolor = "#"
-                for i in xrange(6): bgcolor += "%x" % random.randint(0, 15)
                 for n in xrange(date_range):
-                    reserved_info = room.is_reserved(d1 + timedelta(n))
-                    room_description.append(
-                        {'is_reserved': reserved_info[0],
-                         'bgcolor': reserved_info[1]}
-                    )
+                    room_description.append(room.is_reserved(d1 + timedelta(n)))
                 orders[floor.number][room.name] = room_description
 
         context['all_houses'] = all_houses
@@ -57,3 +53,9 @@ class OrderList(TemplateView):
         context['orders'] = orders
         context['date_range'] = [d1 + timedelta(n) for n in xrange(date_range)]
         return context
+
+
+class OrderEdit(UpdateView):
+    model = Order
+    template_name = "edit.html"
+

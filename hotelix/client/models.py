@@ -33,7 +33,7 @@ class Client(models.Model):
 
 
 class Order(models.Model):
-    rooms = models.ManyToManyField(Room, null=False)
+    rooms = models.ManyToManyField(Room, null=False, verbose_name=u"Pokoje")
     number_of_people = models.IntegerField(u"Liczba gości", null=False)
     number_of_disabled = models.IntegerField(u"Liczba niepełnosprawnych",
                                              null=False, default=0)
@@ -42,7 +42,8 @@ class Order(models.Model):
     # http://stackoverflow.com/a/2569044 Float vs Decimal Field
     price_per_night = models.DecimalField(u"Cena za noc", max_digits=10,
                                           decimal_places=2, null=False)
-    client = models.ForeignKey(Client, null=False)
+    client = models.ForeignKey(Client, null=False, verbose_name=u"Klient")
+    description = models.TextField(u"Opis", null=True, blank=True)
 
     class Meta:
         verbose_name = u"Zamówienie"
