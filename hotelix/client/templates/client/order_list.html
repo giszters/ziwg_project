@@ -47,14 +47,14 @@
             <tr><td>{{ room_name }}</td>
             {% for room_desc in dates %}
                 {% if room_desc.first_half %}
-                    <td style="background-color: {{ room_desc.bgcolor }}"></td>
+                    <td style="background-color: {{ room_desc.bgcolor }}; border-right: none;"></td>
                 {% else %}
-                    <td>&nbsp</td>
+                    <td style="border-right: none;">&nbsp</td>
                 {% endif %}
 
                 {% if room_desc.second_half %}
                     <td style="background-color: {{ room_desc.bgcolor }}">
-                        <a href="{% url 'client:order_edit' room_desc.order_id %}">
+                        <a class="open_popup" value="{{ room_desc.order_id }}" href="#">
                             {{ room_desc.order_id }}
                         </a>
                     </td>
@@ -81,20 +81,7 @@
         }
         $("#change_house").change(function(){
             call_view();
-            /*
-            var house_id = $(this).val();
-            document.location.href = "{% url 'client:order_list' %}?house_id=" + house_id;
-            */
         });
-        /*
-        $("#change_date_btn").click(function(){
-            call_view();
-        });
-
-        $("#start_date").click(function(){
-            call_view();
-        });
-        */
         $("#start_date").datepicker({
             onSelect: function(dateText) {
                 console.log(dateText);
@@ -103,7 +90,12 @@
             firstDay: 1,
             dateFormat: "yy-mm-dd"
         });
-
+        $(".open_popup").click(function(){
+            var order_id = $(this).attr('value')
+            window.open('/client/order/' + order_id +'/edit/', "",
+                        "width=800, height=600, scrollbars=yes");
+            return false;
+        });
     </script>
 {% endblock %}
 

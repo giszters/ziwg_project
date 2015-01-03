@@ -2,6 +2,7 @@
 from hashlib import md5
 
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.core.validators import RegexValidator
 
 from structure.models import Room
@@ -11,6 +12,20 @@ phone_regex = RegexValidator(
     regex=r'^\+?1?\d{9,15}$',
     message=u"Numer tel. musi być w formacie '+999999999'. Od 9 do 15. cyfr."
 )
+
+ORDER_CHOICES = (
+    (0, u'wstępna'),
+    (1, u'potwierdzona'),
+    (2, u'zameldowany'),
+    (3, u'zamknięty')
+)
+
+ORDER_COLORS = {
+    0: '#C0C0C0',
+    1: '#F400F4',
+    2: '#2BAB0E',
+    3: '#BD9700'
+}
 
 
 class Client(models.Model):
@@ -44,6 +59,8 @@ class Order(models.Model):
                                           decimal_places=2, null=False)
     client = models.ForeignKey(Client, null=False, verbose_name=u"Klient")
     description = models.TextField(u"Opis", null=True, blank=True)
+    status = models.IntegerField(u"Status", null=False, choices=ORDER_CHOICES,
+                                 default=0)
 
     class Meta:
         verbose_name = u"Zamówienie"
@@ -53,5 +70,8 @@ class Order(models.Model):
         return u"zamówienie %s), klient: %s" % (self.id, self.client.name)
 
     def get_color(self):
-        return "#" + md5(str(self.id)).hexdigest()[0:6]
+        return ORDER_COLORS[self.status]
+
+    def get_absolute_url(self):
+        return reverse('client:order_edit', kwargs={'pk': str(self.id)})
 

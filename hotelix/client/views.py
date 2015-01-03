@@ -2,14 +2,16 @@
 from collections import OrderedDict
 import datetime
 from datetime import timedelta
-from exceptions import NotImplementedError
-import random
 
 from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, \
     TemplateView
+
+from client.forms import OrderForm
 from client.models import Client, Order
+#from hotelix.views import PopupMixin
 from structure.models import House, Floor, Room
 
 
@@ -57,5 +59,16 @@ class OrderList(TemplateView):
 
 class OrderEdit(UpdateView):
     model = Order
-    template_name = "edit.html"
+    form_class = OrderForm
+    template_name = 'popup_edit.html'
+
+    def post(self, request, *args, **kwargs):
+        response = super(OrderEdit, self).post(request, *args, **kwargs)
+        form = self.get_form(self.form_class)
+        if not form.is_valid():
+            return response
+        return HttpResponse('''<script type="text/javascript">
+            window.opener.location.reload();
+            window.close();
+        </script>''')
 
