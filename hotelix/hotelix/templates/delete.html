@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% if view.info %}
+        <h3 style="color: #FF0000;">{{ view.info }}</h3>
+    {% endif %}
     {% if object.name %}
         <h3>Czy na pewno chcesz usunąć "{{ object.name }}"?</h3>
     {% elif object.get_name %}

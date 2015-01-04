@@ -9,14 +9,34 @@ from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, \
     TemplateView
 
-from client.forms import OrderForm
+from client.forms import OrderForm, ClientForm
 from client.models import Client, Order
-#from hotelix.views import PopupMixin
+from hotelix.views import SuccessMixin
 from structure.models import House, Floor, Room
 
 
 class ClientList(ListView):
     model = Client
+
+
+class ClientEdit(SuccessMixin, UpdateView):
+    model = Client
+    template_name = 'edit.html'
+    form_class = ClientForm
+
+
+class ClientCreate(CreateView):
+    model = Client
+    template_name = 'create.html'
+    form_class = ClientForm
+    success_url = reverse_lazy('client:client_list')
+
+
+class ClientDelete(DeleteView):
+    model = Client
+    success_url = discard_url = reverse_lazy('client:client_list')
+    template_name = 'delete.html'
+    info = u"Uwaga - wszystkie rezerwacje i zamówienia tego klienta zostaną usunięte"
 
 
 class OrderList(TemplateView):
@@ -47,6 +67,15 @@ class OrderList(TemplateView):
                 room_description = []
                 for n in xrange(date_range):
                     room_description.append(room.is_reserved(d1 + timedelta(n)))
+                """ NIE USUWAĆ - proof of concept na zrobienie colspanów rezerwacji
+                distinct_orders = set(map(lambda x: x['order_id'], room_description))
+                distinct_orders = filter(lambda x: x > 0, distinct_orders)
+                for order_id in distinct_orders:
+                    order = filter(lambda x: x['order_id']==order_id, room_description)[0]
+                    colspan = reduce(lambda x,y: x + int(y['order_id']==order_id), room_description, 0)
+                    # i tu nie zadziała, bo pełny dzień tworzy 2 td-ki, liczba orderów != colspan
+                    print colspan, order
+                """
                 orders[floor.number][room.name] = room_description
 
         context['all_houses'] = all_houses
@@ -71,4 +100,5 @@ class OrderEdit(UpdateView):
             window.opener.location.reload();
             window.close();
         </script>''')
+
 

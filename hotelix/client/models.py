@@ -46,6 +46,9 @@ class Client(models.Model):
     def __unicode__(self):
         return u"%s) %s" % (self.id, self.name)
 
+    def get_absolute_url(self):
+        return reverse('client:client_edit', kwargs={'pk': str(self.id)})
+
 
 class Order(models.Model):
     rooms = models.ManyToManyField(Room, null=False, verbose_name=u"Pokoje")

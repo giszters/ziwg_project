@@ -2,7 +2,7 @@
 import datetime
 from django import forms
 
-from client.models import Order
+from client.models import Order, Client
 
 class OrderForm(forms.ModelForm):
     arrival_time = forms.DateTimeField(label=u"Data przyjazdu", required=True,
@@ -48,3 +48,14 @@ class OrderForm(forms.ModelForm):
             'departure_time' in cd and\
             cd['arrival_time'] >= cd['departure_time']:
             raise forms.ValidationError(u"data przybycia >= data wyjazdu")
+
+
+class ClientForm(forms.ModelForm):
+    address = forms.CharField(label=u"Adres", required=False,
+        widget=forms.widgets.Textarea(attrs={'rows': '2', 'cols': '70'}))
+    description = forms.CharField(label=u"Opis", required=False,
+        widget=forms.widgets.Textarea(attrs={'rows': '2', 'cols': '70'}))
+
+    class Meta:
+        model = Client
+        fields = ('name', 'address', 'telephone', 'description')

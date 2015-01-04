@@ -2,9 +2,9 @@
 
 {% block content %}
 <h3>Lista klientów</h3>
-{% comment %}
-<a href="{% url 'client:client_create' %}">Nowy budynek</a>
-{% endcomment %}
+
+<a href="{% url 'client:client_create' %}"><button>Nowy klient</button></a>
+
 <table>
     <thead>
         <tr>
@@ -12,7 +12,8 @@
             <th>imię i nazwisko</th>
             <th>utworzono</th>
             <th>telefon</th>
-            <th>zamówienia</th>
+            <th>edycja</th>
+            <th>usuwanie</th>
         </tr>
     </thead>
     <tbody>
@@ -21,9 +22,9 @@
             <td>{{ client.id }}</td>
             <td>{{ client.name }}</td>
             <td>{{ client.created }}</td>
-            <td>{{ client.telephone }}</td>
-            {# TODO Pętla po zamówieniach #}
-            <td>--- TODO</td>
+            <td>{{ client.telephone }}&nbsp</td>
+            <td><a href="{% url 'client:client_edit' client.id %}">Edytuj</a></td>
+            <td><a href="{% url 'client:client_delete' client.id %}">Usuń</a></td>
         </tr>
     {% endfor %}
     </tbody>
