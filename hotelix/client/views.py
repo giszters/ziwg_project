@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, \
     TemplateView
 
-from client.forms import OrderForm, ClientForm
+from client.forms import OrderForm, OrderCreateForm, ClientForm
 from client.models import Client, Order
 from hotelix.views import SuccessMixin
 from structure.models import House, Floor, Room
@@ -86,13 +86,9 @@ class OrderList(TemplateView):
         return context
 
 
-class OrderEdit(UpdateView):
-    model = Order
-    form_class = OrderForm
-    template_name = 'popup_edit.html'
-
+class ClosePopupMixin(object):
     def post(self, request, *args, **kwargs):
-        response = super(OrderEdit, self).post(request, *args, **kwargs)
+        response = super(ClosePopupMixin, self).post(request, *args, **kwargs)
         form = self.get_form(self.form_class)
         if not form.is_valid():
             return response
@@ -102,3 +98,19 @@ class OrderEdit(UpdateView):
         </script>''')
 
 
+class OrderEdit(ClosePopupMixin, UpdateView):
+    model = Order
+    form_class = OrderForm
+    template_name = 'popup_edit.html'
+
+
+class OrderCreate(ClosePopupMixin, CreateView):
+    model = Order
+    form_class = OrderCreateForm
+    template_name = "client/popup_create.html"
+
+    def get_form_kwargs(self):
+        kwargs = super(OrderCreate, self).get_form_kwargs()
+        kwargs['arr_date'] = self.request.GET.get('arr_date')
+        kwargs['room_id'] = self.request.GET.get('room_id')
+        return kwargs

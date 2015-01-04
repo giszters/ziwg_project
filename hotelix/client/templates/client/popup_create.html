@@ -1,0 +1,62 @@
+{% extends "popup_edit.html" %}
+{% load td_field %}
+
+{% block common %}
+    <form method="post" id="popup_form">
+        {% csrf_token %}
+        <table>
+            {% if form.non_field_errors %}
+                <tr>
+                    <th>Błąd formularza</th>
+                    <td>{{ form.non_field_errors }}</td>
+                </tr>
+            {% endif %}
+            {% td_field form.rooms %}
+            {% td_field form.number_of_people %}
+            {% td_field form.number_of_disabled %}
+            {% td_field form.arrival_time %}
+            {% td_field form.departure_time %}
+            {% td_field form.price_per_night %}
+            {% td_field form.description %}
+            {% td_field form.status %}
+            {% td_field form.create_new_client %}
+            
+            {# Use existing client... #}
+            {% td_field form.client %}
+            
+            {# ... or create new  #}
+            {% td_field form.client_name %}
+            {% td_field form.client_tel %}
+            {% td_field form.client_address %}
+            <tr><td colspan="2"><input type="submit" value="Zapisz" /></td></tr>
+        </table>
+    </form>
+{% endblock %}
+{# Ann Lee - 2 Times #}
+{% block footer %}
+    {{ block.super }}
+    <script type="text/javascript">
+        function toggle_client_fields(){
+            if($("#id_create_new_client").val() == "True"){
+                $("#id_client_name").parents('tr').show(200);
+                $("#id_client_tel").parents('tr').show(200);
+                $("#id_client_address").parents('tr').show(200);
+                /* ...and hide existing client */
+                $("#id_client").parents('tr').hide(200);
+            }
+            else{
+                $("#id_client_name").parents('tr').hide(200);
+                $("#id_client_tel").parents('tr').hide(200);
+                $("#id_client_address").parents('tr').hide(200);
+                /* ...and show existing client */
+                $("#id_client").parents('tr').show(200);
+            }
+        }
+        $(document).ready(function(){
+            toggle_client_fields();
+            $("#id_create_new_client").change(function(){
+                toggle_client_fields();
+            });
+        });
+    </script>
+{% endblock %}

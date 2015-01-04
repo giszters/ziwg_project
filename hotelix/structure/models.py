@@ -70,8 +70,7 @@ class Room(models.Model):
     floor = models.ForeignKey(Floor, null=False)
 
     def __unicode__(self):
-        return u"%s) floor=%s, name=%s beds=%s" %\
-            (self.id, self.floor.number, self.name, self.beds)
+        return u"%s) -- beds=%s" % (self.name, self.beds)
 
     class Meta:
         verbose_name = u"Pokój"
@@ -126,5 +125,7 @@ class Room(models.Model):
             'bgcolor': bgcolor,
             'first_half': first_half,
             'second_half': second_half,
-            'order_id': order_id
+            'order_id': order_id,
+            'order_date': date,
+            'room_id': self.id
         }
