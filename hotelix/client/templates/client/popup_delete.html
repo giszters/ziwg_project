@@ -1,0 +1,11 @@
+{% extends "delete.html" %}
+
+{% block logout %}{% endblock %}
+{% block sweet_logo %}{% endblock %}
+
+{% block common %}
+    {# call block common, because we don't need menu here #}
+    {% block content %}
+        {{ block.super }}
+    {% endblock %}
+{% endblock %}

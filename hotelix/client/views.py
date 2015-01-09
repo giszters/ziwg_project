@@ -114,3 +114,21 @@ class OrderCreate(ClosePopupMixin, CreateView):
         kwargs['arr_date'] = self.request.GET.get('arr_date')
         kwargs['room_id'] = self.request.GET.get('room_id')
         return kwargs
+
+
+class OrderDelete(DeleteView):
+    model = Order
+    template_name = 'client/popup_delete.html'
+    delete_arg = 'client:order_delete'
+    def get_discard_url(self):
+        order_id = self.kwargs['pk']
+        return reverse_lazy('client:order_edit', args=[order_id])
+    discard_url = property(get_discard_url)
+
+    def delete(self, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return HttpResponse('''<script type="text/javascript">
+            window.opener.location.reload();
+            window.close();
+        </script>''')
