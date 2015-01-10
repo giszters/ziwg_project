@@ -47,6 +47,19 @@ class OrderList(PermMixin, TemplateView):
     perm_name = "change_order"
     template_name = 'client/order_list.html'
 
+    def post(self, request, *args, **kwargs):
+        for r in Room.objects.all():
+        #r = Room.objects.get(pk=1)
+            d1 = datetime.datetime(2014, 11, 4, 23, 59)
+            d2 = datetime.datetime(2014, 11, 5, 0, 0)
+            if not r.order_set.filter(departure_time__gt=d1, arrival_time__lt=d2):
+                pass  # znaleziono wolny pokoj
+                # odejmij liczbe osob do pokoju
+                # jesli liczba_osob_pozostałych == 0: break, return "Są wolne pokoje"
+                # wpp szukaj miejsc w pozostałych pokojach, kontunuuj pet
+            # if liczba_osob_pozostałych > 0:
+            # zwroc "Nie ma wolnych pokoi dla takiego zamówienia
+
     def get_context_data(self, **kwargs):
         context = super(OrderList, self).get_context_data(**kwargs)
         # switch between houses
