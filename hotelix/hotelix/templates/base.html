@@ -19,6 +19,7 @@
 <body>
     {% block logout %}
     <div id="logout">
+        <span>{{ user.username }}</span>
         <a href="/logout/">Wyloguj</a>
     </div>
     {% endblock %}
@@ -27,33 +28,48 @@
         <img src="{% static 'img/logo.png' %}" alt="logo" />
     </div>
     {% endblock %}
-
     {% block common %}
     <div id="common">
         <div id="ddblueblockmenu" class="menu">
             <ul>
                 <li><a href="/">Home</a></li>
+                {% if user.is_superuser %}
                 <li><a href="/dja/">Panel admina</a></li>
+                {% endif %}
             </ul>
             <div class="menutitle">Zamówienia</div>
             <ul>
                 <li><a href="{% url 'client:order_list' %}">Rezerwacje</a></li>
                 <li><a href="{% url 'client:client_list' %}">Lista klientów</a></li>
             </ul>
+            {% if perms.structure.change_house %}
             <div class="menutitle">Struktura</div>
             <ul>
                 <li><a href="{% url 'structure:house_list' %}">Lista domów</a></li>
             </ul>
+            {% endif %}
+            {% if perms.services.change_mealtype or perms.services.change_mealorder %}
             <div class="menutitle">Posiłki</div>
             <ul>
+                {% if perms.services.change_mealtype %}
                 <li><a href="{% url 'services:mealtype_list' %}">Lista posiłków</a></li>
+                {% endif %}
+                {% if perms.services.change_mealorder %}
                 <li><a href="{% url 'services:mealorder_list' %}">Zamówienia posiłków</a></li>
+                {% endif %}
             </ul>
+            {% endif %}
+            {% if perms.services.change_servicetype or perms.services.change_serviceorder %}
             <div class="menutitle">Usługi</div>
             <ul>
+                {% if perms.services.change_servicetype %}
                 <li><a href="{% url 'services:servicetype_list' %}">Lista usług</a></li>
+                {% endif %}
+                {% if perms.services.change_serviceorder %}
                 <li><a href="{% url 'services:serviceorder_list' %}">Zamówienia usług</a></li>
+                {% endif %}
             </ul>
+            {% endif %}
         </div>
         <div id="content">
             {% if view.extra_image %}

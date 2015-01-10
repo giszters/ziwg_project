@@ -11,35 +11,40 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, \
 
 from client.forms import OrderForm, OrderCreateForm, ClientForm
 from client.models import Client, Order
-from hotelix.views import SuccessMixin
+from hotelix.views import SuccessMixin, PermMixin
 from structure.models import House, Floor, Room
 
 
-class ClientList(ListView):
+class ClientList(PermMixin, ListView):
     model = Client
+    perm_name = 'change_client'
 
 
-class ClientEdit(SuccessMixin, UpdateView):
+class ClientEdit(PermMixin, SuccessMixin, UpdateView):
     model = Client
     template_name = 'edit.html'
     form_class = ClientForm
+    perm_name = 'change_client'
 
 
-class ClientCreate(CreateView):
+class ClientCreate(PermMixin, CreateView):
     model = Client
     template_name = 'create.html'
     form_class = ClientForm
     success_url = reverse_lazy('client:client_list')
+    perm_name = 'add_client'
 
 
-class ClientDelete(DeleteView):
+class ClientDelete(PermMixin, DeleteView):
     model = Client
     success_url = discard_url = reverse_lazy('client:client_list')
     template_name = 'delete.html'
     info = u"Uwaga - wszystkie rezerwacje i zamówienia tego klienta zostaną usunięte"
+    perm_name = 'delete_client'
 
 
-class OrderList(TemplateView):
+class OrderList(PermMixin, TemplateView):
+    perm_name = "change_order"
     template_name = 'client/order_list.html'
 
     def get_context_data(self, **kwargs):
@@ -98,16 +103,18 @@ class ClosePopupMixin(object):
         </script>''')
 
 
-class OrderEdit(ClosePopupMixin, UpdateView):
+class OrderEdit(PermMixin, ClosePopupMixin, UpdateView):
     model = Order
     form_class = OrderForm
     template_name = 'popup_edit.html'
+    perm_name = 'change_order'
 
 
-class OrderCreate(ClosePopupMixin, CreateView):
+class OrderCreate(PermMixin, ClosePopupMixin, CreateView):
     model = Order
     form_class = OrderCreateForm
     template_name = "client/popup_create.html"
+    perm_name = 'add_order'
 
     def get_form_kwargs(self):
         kwargs = super(OrderCreate, self).get_form_kwargs()
@@ -116,7 +123,7 @@ class OrderCreate(ClosePopupMixin, CreateView):
         return kwargs
 
 
-class OrderDelete(DeleteView):
+class OrderDelete(PermMixin, DeleteView):
     model = Order
     template_name = 'client/popup_delete.html'
     delete_arg = 'client:order_delete'
@@ -124,6 +131,7 @@ class OrderDelete(DeleteView):
         order_id = self.kwargs['pk']
         return reverse_lazy('client:order_edit', args=[order_id])
     discard_url = property(get_discard_url)
+    perm_name = 'delete_order'
 
     def delete(self, *args, **kwargs):
         self.object = self.get_object()

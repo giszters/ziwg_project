@@ -44,8 +44,8 @@ button{
 
 #logout{
     width: 100px;
-    height: 30px;
-    line-height: 30px; /* center verticaly */
+    /* height: 30px; */
+    line-height: 20px; /* center verticaly */
     float: right;
     font-size: 12px;
     font-weight: bold;
@@ -60,6 +60,9 @@ button{
 #logout a:hover{
     text-decoration: underline;
     color: #fff;
+}
+#logout span{
+    text-transform: none;
 }
 
 /* http://stackoverflow.com/a/446097 */

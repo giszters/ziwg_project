@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from hotelix.views import SuccessMixin,compute_lightness
+from hotelix.views import SuccessMixin,compute_lightness, PermMixin
 from structure.forms import FloorForm, ChamberForm, RoomForm
 from structure.models import House, Floor, Chamber, Room
 
@@ -60,38 +60,43 @@ class StructureMixin(object):
 
 
 """ HOUSE model """
-class HouseList(StructureMixin, ListView):
+class HouseList(PermMixin, StructureMixin, ListView):
     model = House
     extra_image = 'img/house.png'
     bs_length = 1
+    perm_name = 'change_house'
 
 
-class HouseCreate(StructureMixin, CreateView):
+class HouseCreate(PermMixin, StructureMixin, CreateView):
     model = House
     success_url = reverse_lazy('structure:house_list')
     bs_length = 1
+    perm_name = 'add_house'
 
 
-class HouseEdit(StructureMixin, SuccessMixin, UpdateView):
+class HouseEdit(PermMixin, StructureMixin, SuccessMixin, UpdateView):
     model = House
     template_name = "edit.html"
     bs_length = 1
+    perm_name = 'change_house'
 
 
-class HouseDelete(StructureMixin, DeleteView):
+class HouseDelete(PermMixin, StructureMixin, DeleteView):
     model = House
     success_url = reverse_lazy('structure:house_list')
     bs_length = 2
     bs_house_prefix = 'pk'
+    perm_name = 'delete_house'
     
 
 
 """ FLOOR model """
-class FloorList(StructureMixin, ListView):
+class FloorList(PermMixin, StructureMixin, ListView):
     model = Floor
     extra_image = 'img/floor.png'
     bs_length = 3
     bs_house_prefix = 'house_id'
+    perm_name = 'change_floor'
 
     def get_queryset(self):
         house_id = self.kwargs['house_id']
@@ -105,12 +110,13 @@ class FloorList(StructureMixin, ListView):
         return context
 
 
-class FloorEdit(StructureMixin, SuccessMixin, UpdateView):
+class FloorEdit(PermMixin, StructureMixin, SuccessMixin, UpdateView):
     model = Floor
     template_name = 'edit.html'
     form_class = FloorForm
     bs_length = 3
     bs_house_prefix = 'house_id'
+    perm_name = 'change_floor'
 
     def get_form_kwargs(self):
         kwargs = super(FloorEdit, self).get_form_kwargs()
@@ -118,12 +124,13 @@ class FloorEdit(StructureMixin, SuccessMixin, UpdateView):
         return kwargs
 
 
-class FloorCreate(StructureMixin, CreateView):
+class FloorCreate(PermMixin, StructureMixin, CreateView):
     template_name = "create.html"
     model = Floor
     form_class = FloorForm
     bs_length = 3
     bs_house_prefix = 'house_id'
+    perm_name = 'add_floor'
     
     def get_form_kwargs(self):
         kwargs = super(FloorCreate, self).get_form_kwargs()
@@ -135,12 +142,13 @@ class FloorCreate(StructureMixin, CreateView):
         return reverse_lazy('structure:floor_list', args=[self.kwargs['house_id']])
 
 
-class FloorDelete(StructureMixin, DeleteView):
+class FloorDelete(PermMixin, StructureMixin, DeleteView):
     template_name = 'delete.html'
     model = Floor
     bs_length = 4
     bs_house_prefix = 'house_id'
     bs_floor_prefix = 'pk'
+    perm_name = 'delete_floor'
 
     def get_success_url(self):
         return reverse_lazy('structure:floor_list', args=[self.kwargs['house_id']])
@@ -151,12 +159,13 @@ class FloorDelete(StructureMixin, DeleteView):
 
 
 """ ROOM model """
-class RoomList(StructureMixin, ListView):
+class RoomList(PermMixin, StructureMixin, ListView):
     model = House
     extra_image = 'img/room.png'
     bs_length = 5
     bs_house_prefix = 'house_id'
     bs_floor_prefix = 'floor_id'
+    perm_name = 'change_room'
     
     def get_queryset(self):
         floor_id = self.kwargs['floor_id']
@@ -171,13 +180,14 @@ class RoomList(StructureMixin, ListView):
         return context
 
 
-class RoomCreate(StructureMixin, CreateView):
+class RoomCreate(PermMixin, StructureMixin, CreateView):
     template_name = "create.html"
     model = Room
     form_class = RoomForm
     bs_length = 5
     bs_house_prefix = 'house_id'
     bs_floor_prefix = 'floor_id'
+    perm_name = 'add_room'
     
     def get_form_kwargs(self):
         kwargs = super(RoomCreate, self).get_form_kwargs()
@@ -190,13 +200,14 @@ class RoomCreate(StructureMixin, CreateView):
                                                          kw['floor_id']])
 
 
-class RoomEdit(StructureMixin, SuccessMixin, UpdateView):
+class RoomEdit(PermMixin, StructureMixin, SuccessMixin, UpdateView):
     model = Room
     template_name = 'edit.html'
     form_class = RoomForm
     bs_length = 5
     bs_house_prefix = 'house_id'
     bs_floor_prefix = 'floor_id'
+    perm_name = 'change_room'
     
     def get_form_kwargs(self):
         kwargs = super(RoomEdit, self).get_form_kwargs()
@@ -204,30 +215,31 @@ class RoomEdit(StructureMixin, SuccessMixin, UpdateView):
         return kwargs
 
 
-class RoomDelete(StructureMixin, DeleteView):
+class RoomDelete(PermMixin, StructureMixin, DeleteView):
     template_name = 'delete.html'
     model = Room
     bs_length = 6
     bs_house_prefix = 'house_id'
     bs_floor_prefix = 'floor_id'
     bs_room_prefix = 'pk'
+    perm_name = 'delete_room'
 
     def get_success_url(self):
         kw = self.kwargs
         return reverse_lazy('structure:room_list', args=[kw['house_id'],
                                                          kw['floor_id']])
-
     def get_discard_url(self):
         return self.get_success_url()
     discard_url = property(get_discard_url)
 
 
 """ CHAMBER model """
-class ChamberList(StructureMixin, ListView):
+class ChamberList(PermMixin, StructureMixin, ListView):
     model = Floor
     bs_length = 3
     bs_house_prefix = 'house_id'
     is_chamber = True
+    perm_name = 'change_chamber'
 
     def get_queryset(self):
         house_id = self.kwargs['house_id']
@@ -241,13 +253,14 @@ class ChamberList(StructureMixin, ListView):
         return context
 
 
-class ChamberEdit(StructureMixin, SuccessMixin, UpdateView):
+class ChamberEdit(PermMixin, StructureMixin, SuccessMixin, UpdateView):
     template_name = 'edit.html'
     model = Chamber
     form_class = ChamberForm
     bs_length = 3
     bs_house_prefix = 'house_id'
     is_chamber = True
+    perm_name = 'change_chamber'
 
     def get_form_kwargs(self):
         kwargs = super(ChamberEdit, self).get_form_kwargs()
@@ -255,13 +268,14 @@ class ChamberEdit(StructureMixin, SuccessMixin, UpdateView):
         return kwargs
 
 
-class ChamberCreate(StructureMixin, CreateView):
+class ChamberCreate(PermMixin, StructureMixin, CreateView):
     template_name = "create.html"
     model = Chamber
     form_class = ChamberForm
     bs_length = 3
     bs_house_prefix = 'house_id'
     is_chamber = True
+    perm_name = 'add_chamber'
     
     def get_form_kwargs(self):
         kwargs = super(ChamberCreate, self).get_form_kwargs()
@@ -273,12 +287,13 @@ class ChamberCreate(StructureMixin, CreateView):
         return reverse_lazy('structure:chamber_list', args=[self.kwargs['house_id']])
 
 
-class ChamberDelete(StructureMixin, DeleteView):
+class ChamberDelete(PermMixin, StructureMixin, DeleteView):
     template_name = 'delete.html'
     model = Chamber
     bs_length = 3
     bs_house_prefix = 'house_id'
     is_chamber = True
+    perm_name = 'delete_chamber'
 
     def get_success_url(self):
         return reverse_lazy('structure:chamber_list', args=[self.kwargs['house_id']])
