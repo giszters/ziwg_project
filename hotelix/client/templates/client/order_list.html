@@ -1,37 +1,102 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block content %}
-    <h3>Lista rezerwacji</h3>
+<div>
+    <label>Dzień początkowy<input type="text" class="date_picker" id="start_date" />
     {% comment %}
-<a href="{% url 'client:client_create' %}">Nowy budynek</a>
+        <label>Dzień końcowy<input type="text" class="date_picker" />
+        <button id="change_date_btn">Zmień</button>
+    {% endcomment %}
+</div>
+{% comment %}
+{% for floor in floors %}
+    <h3>Pietro {{ floor.id }}</h3>
+    <ul>
+    {% for room in floor.rooms %}
+        <ul>Pokój {{ room.name }} {{ room.orders }}</ul>
+    {% endfor %}
+    </ul>
+{% endfor %}
 {% endcomment %}
-    <table>
-        <thead>
+
+<table>
+    <thead>
         <tr>
-            <th>ID</th>
-            <th>Liczba gości</th>
-            <th>Liczba niepełnosprawnych</th>
-            <th>Data przyjazdu</th>
-            <th>Data wyjazdu</th>
-            <th>Cena za noc</th>
-            <th>Klient</th>
-            <th>Edycja</th>
-            <th></th>
+            <th>Układ</th>
+            {% for date in date_range %}
+            <th colspan="2">{{ date|date:"d.m" }}</th>
+            {% endfor %}
         </tr>
-        </thead>
-        <tbody>
-        {% for order in order_list %}
-            <tr>
-                <td>{{ order.id }}</td>
-                <td>{{ order.number_of_people }}</td>
-                <td>{{ order.number_of_disabled }}</td>
-                <td>{{ order.arrival_time }}</td>
-                <td>{{ order.departure_time }}</td>
-                <td>{{ order.price_per_nigth }}</td>
-                <td>{{ order.client }}</td>
-                <td><a href="{% url 'client:order_edit' order.id %}">Edytuj</a></td>
+    </thead>
+    <tbody>
+    {% for floor_number, rooms in orders.items %}
+        {% comment %}colspan == 2*date_count + 1{% endcomment %}
+        <tr><td colspan="29" style="background-color: #FFEDC3;">Piętro: {{ floor_number }}</td></tr>
+        {% for room_name, dates in rooms.items %}
+            <tr><td>{{ room_name }}</td>
+            {% for room_desc in dates %}
+                {% if room_desc.first_half %}
+                    <td style="background-color: {{ room_desc.bgcolor }}; border-right: none;"></td>
+                {% else %}
+                    <td style="border-right: none;">&nbsp</td>
+                {% endif %}
+
+                {% if room_desc.second_half %}
+                    <td style="background-color: {{ room_desc.bgcolor }}">
+                        <a class="edit_order_popup" value="{{ room_desc.order_id }}" href="#">
+                            {{ room_desc.order_id }}
+                        </a>
+                    </td>
+                {% else %}
+                    <td><a href="#"
+                           class="create_order_popup"
+                           style="text-decoration: none;"
+                           value="{{ room_desc.order_date|date:'Y-m-d' }};{{ room_desc.room_id }}">
+                        -></a>
+                    </td>
+                {% endif %}
+            {% endfor %}
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
+
+
+{% block footer %}
+    {{ block.super }}
+    <script type="text/javascript">
+        function call_view(){
+            var get_params = "?";
+            get_params += "house_id=" + $("#change_house").val();
+            get_params += "&start_date=" +  $("#start_date").val();
+            document.location.href = "{% url 'client:order_list' %}" + get_params;
+        }
+        $("#change_house").change(function(){
+            call_view();
+        });
+        $("#start_date").datepicker({
+            onSelect: function(dateText) {
+                call_view();
+            },
+            firstDay: 1,
+            dateFormat: "yy-mm-dd"
+        });
+        $(".edit_order_popup").click(function(){
+            var order_id = $(this).attr('value');
+            window.open('/client/order/' + order_id +'/edit/?arr_date', "",
+                        "width=800, height=600, scrollbars=yes");
+            return false;
+        });
+        $(".create_order_popup").click(function(){
+            var order_date = $(this).attr('value').split(";")[0];
+            var room_id = $(this).attr('value').split(";")[1];
+            window.open('/client/order/create/?arr_date='+order_date+"&room_id="+room_id, "",
+                        "width=800, height=600, scrollbars=yes");
+            return false;
+        });
+    </script>
+{% endblock %}
+

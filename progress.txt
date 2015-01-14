@@ -171,4 +171,8 @@ Kolejna rzecz którą widzę dla siebie to generowanie raportów za pobyt
 oraz raportów działalności hotelu.
 Wczesna pora, idę na/po browara :D
 -----------------------------------------------------------------
-
+2014-19-19
+Rozpocząłem pisanie tabelki do widoku wszystkich rezerwacji (widok OrderList)
+Na razie mam zhardcodowane daty w przedziale dwóch tygodni listopada tego roku.
+Ale zamierzam zrobić wybieranie daty początkowej i końcowej i dodać kolor dla każdego
+zamówienia i przekierowanie na widok edycji zamówienia którego jeszcze nie ma.

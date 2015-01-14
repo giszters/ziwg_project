@@ -4,7 +4,6 @@ from django.db import models
 
 from client.models import Client
 
-
 class MealType(models.Model):
     name = models.CharField(u"Nazwa dania", max_length=50, null=False)
     description = models.TextField(u"Opis dania", null=False)
@@ -82,14 +81,16 @@ class ServiceOrder(models.Model):
     service_type = models.ForeignKey(ServiceType, null=False)
     start_time = models.DateField(u"Data rozpoczęcia", null=False)
     stop_time = models.DateField(u"Data zakończenia", null=False)
-    order_time = models.TimeField(u"Godzina usługi", blank=True, null=True)
+    order_time = models.TimeField(u"Godzina zabiegu", blank=True, null=True)
+    order_dtime = models.DateTimeField(u"Data i godzina wykonania",
+                    null=False, auto_now_add=True)
     client = models.ForeignKey(Client, null=False)
     price = models.DecimalField(u"Cena za usługę", null=False, max_digits=10,
                                 decimal_places=2)
 
     class Meta:
-        verbose_name = u"Zamówienie usługi"
-        verbose_name_plural = u"Zamówienia usług"
+        verbose_name = u"Zamówienie zabiegu"
+        verbose_name_plural = u"Zamówienia zabiegów"
 
     def __unicode__(self):
         return u"%s) service: %s, client: %s" % (self.id, self.service_type.name,

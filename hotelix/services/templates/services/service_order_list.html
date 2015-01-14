@@ -6,12 +6,10 @@
     <table>
         <tr>
             <th>Id</th>
-            <th>Klient</th>
+            <th>Pacjent</th>
             <th>Rodzaj</th>
             <th>Cena</th>
-            <th>Rozpoczęcie</th>
-            <th>Zakończenie</th>
-            <th>Czas wykonania</th>
+            <th>Data i godzina wykonania</th>
             <th>Edycja</th>
             <th>Usuń</th>
         </tr>
@@ -21,10 +19,8 @@
             <td>{{ service_order.client.name }}</td>
             <td>{{ service_order.service_type.name }}</td>
             <td>{{ service_order.price }}</td>
-            <td>{{ service_order.start_time }}</td>
-            <td>{{ service_order.stop_time }}</td>
-            {% if service_order.order_time %} 
-                <td>{{ service_order.order_time }}</td>
+            {% if service_order.order_dtime %}
+                <td>{{ service_order.order_dtime }}</td>
             {% else %}
                 <td>---</td>
             {% endif %}
