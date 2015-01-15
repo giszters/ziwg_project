@@ -72,7 +72,7 @@ class MealOrderCreate(CreateView):
 class ServiceTypeList(ListView):
     model = ServiceType
     template_name = 'services/type_list.html'
-    view_name = u"Lista usług"
+    view_name = u"Lista zabiegów"
     create_url = reverse_lazy('services:servicetype_create')
 
 

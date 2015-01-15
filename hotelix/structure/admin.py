@@ -6,6 +6,6 @@ class FloorAdmin(admin.ModelAdmin):
     list_display = ('number', 'house')
 
 admin.site.register(House)
-admin.site.register(Floor, FloorAdmin)
-admin.site.register(Room)
-admin.site.register(Chamber)
+#admin.site.register(Floor, FloorAdmin)
+#admin.site.register(Room)
+#admin.site.register(Chamber)

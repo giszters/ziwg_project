@@ -57,12 +57,12 @@ class MealOrder(models.Model):
 
 
 class ServiceType(models.Model):
-    name = models.CharField(u"Nazwa usługi", max_length=50, null=False)
+    name = models.CharField(u"Nazwa zabiegu", max_length=50, null=False)
     description = models.TextField(u"Opis", null=False)
 
     class Meta:
-        verbose_name = u"Usługa dot."
-        verbose_name_plural = u"Usługi dot."
+        verbose_name = u"Zabieg"
+        verbose_name_plural = u"Zabiegi"
 
     def __unicode__(self):
         return u"%s) %s" % (self.id, self.name)

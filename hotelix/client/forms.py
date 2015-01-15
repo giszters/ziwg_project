@@ -2,7 +2,7 @@
 import datetime
 from django import forms
 
-from client.models import Order, Client, phone_regex
+from client.models import Order, Client, phone_regex, Physician
 
 BOOLEAN_CHOICES = (
    (True, u"Tak"),
@@ -57,10 +57,10 @@ class OrderForm(forms.ModelForm):
 
 
 class OrderCreateForm(OrderForm):
-    create_new_client = forms.BooleanField(label=u"Nowy klient",
+    create_new_client = forms.BooleanField(label=u"Nowy pacjent",
        widget=forms.widgets.Select(choices=BOOLEAN_CHOICES), required=False)
     client = forms.ModelChoiceField(queryset=Client.objects.order_by('-id'),
-        label=u"Klient", required=False)
+        label=u"Pacjent", required=False)
     client_name = forms.CharField(label=u"Imię i nazwisko", required=False)
     client_tel = forms.CharField(label=u"Telefon", required=False,
                                  validators=[phone_regex])
@@ -109,10 +109,22 @@ class OrderCreateForm(OrderForm):
 class ClientForm(forms.ModelForm):
     address = forms.CharField(label=u"Adres", required=False,
         widget=forms.widgets.Textarea(attrs={'rows': '2', 'cols': '70'}))
-    description = forms.CharField(label=u"Opis", required=False,
+    history = forms.CharField(label=u"Historia", required=False,
         widget=forms.widgets.Textarea(attrs={'rows': '2', 'cols': '70'}))
+    pesel = forms.CharField(label=u"PESEL", required=True,
+                              widget=forms.widgets.Textarea(attrs={'rows': '1', 'cols': '70'}))
 
     class Meta:
         model = Client
-        fields = ('name', 'address', 'telephone', 'description')
+        fields = ('name', 'address', 'pesel', 'telephone', 'history')
 
+
+class PhysicianForm(forms.ModelForm):
+    address = forms.CharField(label=u"Adres", required=False,
+                              widget=forms.widgets.Textarea(attrs={'rows': '2', 'cols': '70'}))
+    specialty = forms.CharField(label=u"Specjalizacja", required=False,
+                              widget=forms.widgets.Textarea(attrs={'rows': '1', 'cols': '70'}))
+
+    class Meta:
+        model = Physician
+        fields = ('name', 'address', 'telephone', 'specialty')

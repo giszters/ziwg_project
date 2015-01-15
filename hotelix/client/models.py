@@ -29,7 +29,7 @@ ORDER_COLORS = {
 
 
 class Client(models.Model):
-    created = models.DateTimeField(u"Utworzono", auto_now_add=True)
+    created = models.DateTimeField(u"Dodano", auto_now_add=True)
     name = models.CharField(u"Imię i nazwisko", max_length=100)
     # Pykniemy sobie regexp'a na numer telefonu?
     # http://stackoverflow.com/a/19131360
@@ -37,14 +37,15 @@ class Client(models.Model):
     telephone = models.CharField(u"nr tel.", max_length=20,
                                  validators=[phone_regex], blank=True)
     address = models.TextField(u"Adres", blank=True)
-    description = models.TextField(u"Opis", blank=True)
+    history = models.TextField(u"Przebyte Zabiegi", blank=True, null=True)
+    pesel = models.TextField(u"PESEL", blank=False, default=u"65022008595")
 
     class Meta:
         verbose_name = u"Pacjent"
         verbose_name_plural = u"Pacjenci"
 
     def __unicode__(self):
-        return u"%s) %s" % (self.id, self.name)
+        return u"[P%s] %s" % (self.id, self.name)
 
     def get_absolute_url(self):
         return reverse('client:client_edit', kwargs={'pk': str(self.id)})
@@ -78,3 +79,22 @@ class Order(models.Model):
     def get_absolute_url(self):
         return reverse('client:order_edit', kwargs={'pk': str(self.id)})
 
+
+class Physician(models.Model):
+    created = models.DateTimeField(u"Dodano", auto_now_add=True)
+    name = models.CharField(u"Imię i nazwisko", max_length=100)
+    telephone = models.CharField(u"nr tel.", max_length=20,
+                                 validators=[phone_regex], blank=True)
+    address = models.TextField(u"Adres", blank=True)
+    specialty = models.TextField(u"Specjalizacja", blank=False,
+                                 default=u"lekarz medycyny")
+
+    class Meta:
+        verbose_name = u"Lekarz"
+        verbose_name_plural = u"Lekarze"
+
+    def __unicode__(self):
+        return u"[L%s] %s" % (self.id, self.name)
+
+    def get_absolute_url(self):
+        return reverse('client:physician_edit', kwargs={'pk': str(self.id)})

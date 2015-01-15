@@ -31,19 +31,23 @@
     {% block common %}
     <div id="common">
         <div id="ddblueblockmenu" class="menu">
+            <div class="menutitle">Zarządzanie</div>
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/dja/">Panel admina</a></li>
+                <li><a href="/dja/">Administracja systemem</a></li>
             </ul>
-            <div class="menutitle">Wizyty</div>
+            <div class="menutitle">Pacjenci/Lekarze</div>
             <ul>
                 <li><a href="{% url 'client:client_list' %}">Lista pacjentów</a></li>
-                <li><a href="{% url 'client:order_list' %}">Lista wizyt</a></li>
+                <li><a href="{% url 'client:physician_list' %}">Lista
+                    lekarzy</a></li>
+                <!---<li><a href="{% url 'client:order_list' %}">Lista
+                wizyt</a></li>--->
             </ul>
             <div class="menutitle">Zabiegi</div>
             <ul>
                 <li><a href="{% url 'services:servicetype_list' %}">Lista zabiegów</a></li>
-                <li><a href="{% url 'services:serviceorder_list' %}">Zamówienia zabiegów</a></li>
+                <li><a href="{% url 'services:serviceorder_list' %}">Rezerwacje
+                    zabiegów</a></li>
             </ul>
         </div>
         <div id="content">

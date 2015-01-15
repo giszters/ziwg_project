@@ -9,8 +9,8 @@ from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, \
     TemplateView
 
-from client.forms import OrderForm, OrderCreateForm, ClientForm
-from client.models import Client, Order
+from client.forms import OrderForm, OrderCreateForm, ClientForm, PhysicianForm
+from client.models import Client, Order, Physician
 from hotelix.views import SuccessMixin
 from structure.models import House, Floor, Room
 
@@ -19,10 +19,27 @@ class ClientList(ListView):
     model = Client
 
 
+class PhysicianList(ListView):
+    model = Physician
+
+
 class ClientEdit(SuccessMixin, UpdateView):
     model = Client
     template_name = 'edit.html'
     form_class = ClientForm
+
+
+class PhysicianEdit(SuccessMixin, UpdateView):
+    model = Physician
+    template_name = 'edit.html'
+    form_class = PhysicianForm
+
+
+class PhysicianCreate(CreateView):
+    model = Physician
+    template_name = 'create.html'
+    form_class = PhysicianForm
+    success_url = reverse_lazy('client:physician_list')
 
 
 class ClientCreate(CreateView):
@@ -36,7 +53,15 @@ class ClientDelete(DeleteView):
     model = Client
     success_url = discard_url = reverse_lazy('client:client_list')
     template_name = 'delete.html'
-    info = u"Uwaga - wszystkie rezerwacje i zamówienia tego klienta zostaną usunięte"
+    info = u"Uwaga - wszystkie rezerwacje tego pacjenta zostaną " \
+           u"usunięte"
+
+
+class PhysicianDelete(DeleteView):
+    model = Physician
+    success_url = discard_url = reverse_lazy('client:physician_list')
+    template_name = 'delete.html'
+    info = u"Uwaga - wszystkie rezerwacje tego lekarza zostaną usunięte"
 
 
 class OrderList(TemplateView):

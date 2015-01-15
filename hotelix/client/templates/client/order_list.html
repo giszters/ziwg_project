@@ -9,16 +9,6 @@
         <button id="change_date_btn">Zmień</button>
     {% endcomment %}
 </div>
-{% comment %}
-{% for floor in floors %}
-    <h3>Pietro {{ floor.id }}</h3>
-    <ul>
-    {% for room in floor.rooms %}
-        <ul>Pokój {{ room.name }} {{ room.orders }}</ul>
-    {% endfor %}
-    </ul>
-{% endfor %}
-{% endcomment %}
 
 <table>
     <thead>

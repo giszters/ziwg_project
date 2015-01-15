@@ -3,7 +3,8 @@ from django.conf.urls import patterns, include, url
 
 #from structure.views import *  # But I want to see all classes
 from client.views import ClientList, ClientEdit, ClientCreate, ClientDelete,\
-    OrderList, OrderEdit, OrderCreate
+    OrderList, OrderEdit, OrderCreate, PhysicianList, PhysicianEdit, \
+    PhysicianCreate, PhysicianDelete
 
 urlpatterns = [
     url(r'^client/$', ClientList.as_view(), name='client_list'),
@@ -14,5 +15,12 @@ urlpatterns = [
     url(r'^order/$', OrderList.as_view(), name='order_list'),
     url(r'^order/(?P<pk>[0-9]+)/edit/$', OrderEdit.as_view(), name='order_edit'),
     url(r'^order/create/$', OrderCreate.as_view(), name='order_create'),
-    #url(r'^houses/(?P<pk>[0-9]+)/edit/$', HouseEdit.as_view(), name='house_edit'),
+
+    url(r'^physician/$', PhysicianList.as_view(), name='physician_list'),
+    url(r'^physician/(?P<pk>[0-9]+)/edit/$', PhysicianEdit.as_view(),
+        name='physician_edit'),
+    url(r'^physician/create/$', PhysicianCreate.as_view(),
+        name='physician_create'),
+    url(r'^physician/(?P<pk>[0-9]+)/delete/$', PhysicianDelete.as_view(),
+        name='physician_delete'),
 ]
