@@ -1,5 +1,5 @@
 body{
-    background-color: #ABFF8A;
+    background-color: #FFFFFF;
 }
 /* nice styles for table, a little downgrade http://veerle-v2.duoh.com/blog/comments/a_css_styled_table/ */
 table {
@@ -10,25 +10,26 @@ table {
 }
 th {
     font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica,sans-serif;
-    border-right: 1px solid #3cdfff;
-    border-bottom: 1px solid #3cdfff;
-    border-top: 1px solid #3cdfff;
+    border-right: 1px solid #0000ff;
+    border-bottom: 1px solid #0000ff;
+    border-top: 1px solid #0000ff;
     letter-spacing: 2px;
     text-transform: uppercase;
     text-align: left;
     padding: 6px 6px 6px 12px;
-    background-color: #CAE8EA;
+    /* background-color: #3CDFFF; */
+    background-color: #2175bc;
 }
 td {
-    border-right: 1px solid #3cdfff;
-    border-bottom: 1px solid #3cdfff;
+    border-right: 1px solid #0000ff;
+    border-bottom: 1px solid #0000ff;
     background: #fff;
     padding: 6px 6px 6px 12px;
     font-size: 11px;
 }
 th:first-child, td:first-child{
     /* border-left: 1px solid #C1DAD7 */;
-    border-left: 1px solid #3cdfff
+    border-left: 1px solid #0000ff;
 }
 
 button{
