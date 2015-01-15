@@ -85,12 +85,12 @@ class ServiceOrder(models.Model):
     order_dtime = models.DateTimeField(u"Data i godzina wykonania",
                     null=False, auto_now_add=True)
     client = models.ForeignKey(Client, null=False)
-    price = models.DecimalField(u"Cena za usługę", null=False, max_digits=10,
+    price = models.DecimalField(u"Cena za zagieg", null=False, max_digits=10,
                                 decimal_places=2)
 
     class Meta:
-        verbose_name = u"Zamówienie zabiegu"
-        verbose_name_plural = u"Zamówienia zabiegów"
+        verbose_name = u"Rezerwacja zabiegu"
+        verbose_name_plural = u"Rezerwacje zabiegów"
 
     def __unicode__(self):
         return u"%s) service: %s, client: %s" % (self.id, self.service_type.name,

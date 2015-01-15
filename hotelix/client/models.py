@@ -67,7 +67,7 @@ class Order(models.Model):
                                  default=0)
 
     class Meta:
-        verbose_name = u"Zamówienie"
+        verbose_name = u""
         verbose_name_plural = u"Zamówienia"
 
     def __unicode__(self):
