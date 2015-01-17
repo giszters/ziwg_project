@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>Lista pacjentów</h3>
+<h3>Lista lekarzy</h3>
 
-<a href="{% url 'client:client_create' %}"><button>Dodaj pacjenta</button></a>
+<a href="{% url 'client:physician_create' %}"><button>Dodaj lekarza</button></a>
 
 <table>
     <thead>
         <tr>
             <th>id</th>
             <th>imię i nazwisko</th>
-            <th>Pesel</th>
             <th>utworzono</th>
             <th>telefon</th>
+            <th>specjalizacja</th>
             <th>edycja</th>
             <th>usuwanie</th>
         </tr>
@@ -22,11 +22,11 @@
         <tr>
             <td>{{ client.id }}</td>
             <td>{{ client.name }}</td>
-            <td>{{ client.pesel }}</td>
             <td>{{ client.created }}</td>
             <td>{{ client.telephone }}&nbsp</td>
-            <td><a href="{% url 'client:client_edit' client.id %}">Edytuj</a></td>
-            <td><a href="{% url 'client:client_delete' client.id %}">Usuń</a></td>
+            <td>{{ client.specialty }}&nbsp</td>
+            <td><a href="{% url 'client:physician_edit' client.id %}">Edytuj</a></td>
+            <td><a href="{% url 'client:physician_delete' client.id %}">Usuń</a></td>
         </tr>
     {% endfor %}
     </tbody>

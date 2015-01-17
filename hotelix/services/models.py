@@ -85,7 +85,7 @@ class ServiceOrder(models.Model):
     order_dtime = models.DateTimeField(u"Data i godzina wykonania",
                     null=False, auto_now_add=True)
     client = models.ForeignKey(Client, null=False)
-    price = models.DecimalField(u"Cena za zagieg", null=False, max_digits=10,
+    price = models.DecimalField(u"Cena za zabieg", null=False, max_digits=10,
                                 decimal_places=2)
 
     class Meta:
